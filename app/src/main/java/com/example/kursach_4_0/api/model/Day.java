@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Day {
+
+
     @SerializedName("dt")
     long dateLong;
 
@@ -15,8 +17,14 @@ public class Day {
     @SerializedName("weather")
     List<Weather> weather;
 
+
+    //@SerializedName("weather")
+    //Town id;
+
     @SerializedName("wind")
     Wind wind;
+
+
 
     public Date getDate() {
         return new Date(dateLong * 1000);

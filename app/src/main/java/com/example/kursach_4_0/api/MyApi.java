@@ -13,6 +13,6 @@ import retrofit2.http.Query;
 
 public interface MyApi {
 
-    @GET("find")
+    @GET("forecast")
     Call<Data> getData(@Query("q") String location, @Query("APPID") String token, @Query("lang") String lang);
 }
