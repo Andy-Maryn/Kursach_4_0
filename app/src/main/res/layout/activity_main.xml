@@ -8,6 +8,6 @@
         android:id="@+id/rvTowns"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transformPivotX="@android:dimen/thumbnail_width"/>
+        android:transformPivotX="@android:dimen/thumbnail_width" />
 
 </RelativeLayout>
