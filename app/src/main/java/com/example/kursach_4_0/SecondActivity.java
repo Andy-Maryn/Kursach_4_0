@@ -74,13 +74,9 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
 
         //myThirdRecycleViewAdapter.notifyItemRemoved();
         // towns.clear();
-        myThirdRecycleViewAdapter.notifyDataSetChanged();
-        recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
+        // myThirdRecycleViewAdapter.notifyDataSetChanged();
+        // recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
 
-
-
-        for(int j=0; j < 7; j++)
-        myResponse(name, j);
     }
 
     public void myResponse(String location, final int i){
