@@ -39,7 +39,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         String name = arguments.get("return").toString();
 
         weatherAdapter = new WeatherAdapter(this, weatherDescription);
-        townAdapter = new TownAdapter(this, null);
+        townAdapter = new TownAdapter(this, dataDayList);
 
         // data to populate the RecyclerView with
         ArrayList<String> townList = new ArrayList<>();
@@ -55,7 +55,9 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                     weatherDescription.add(day.getWeather().getDescription());
 
                     weatherAdapter.setData(weatherDescription);
+                    townAdapter.setData(dataDayList);
                     weatherAdapter.notifyDataSetChanged();
+                    townAdapter.notifyDataSetChanged();
                 }
             }
             @Override

@@ -12,21 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private ArrayList<Date> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public TownAdapter(Context context, List<String> data) {
+    public TownAdapter(Context context, ArrayList<Date> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
 
-    public void setData(List<String> mData) {
+    public void setData(ArrayList<Date> mData) {
         this.mData = mData;
     }
 
@@ -40,8 +41,8 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String town = mData.get(position);
-        holder.myTextView.setText(town);
+        Date town = mData.get(position);
+        // holder.myTextView.setText((CharSequence) town);
     }
 
     // total number of rows
@@ -69,7 +70,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     }
 
     // convenience method for getting data at click position
-    public String getItem(int id) {
+    public Date getItem(int id) {
         return mData.get(id);
     }
 
