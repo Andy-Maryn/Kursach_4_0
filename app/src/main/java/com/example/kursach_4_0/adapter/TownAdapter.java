@@ -14,22 +14,26 @@ import com.example.kursach_4_0.SecondActivity;
 
 import java.util.List;
 
-public class MyThirdRecycleViewAdapter extends RecyclerView.Adapter<MyThirdRecycleViewAdapter.ViewHolder> {
+public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public MyThirdRecycleViewAdapter(Context context, List<String> data) {
+    public TownAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+    }
+
+    public void setData(List<String> mData) {
+        this.mData = mData;
     }
 
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recycleview_column, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +57,7 @@ public class MyThirdRecycleViewAdapter extends RecyclerView.Adapter<MyThirdRecyc
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.column3textView);
+            myTextView = itemView.findViewById(R.id.tvTownName);
             itemView.setOnClickListener(this);
         }
 

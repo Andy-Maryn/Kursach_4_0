@@ -7,10 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kursach_4_0.adapter.MySecondRecyclerViewAdapter;
-import com.example.kursach_4_0.adapter.MyThirdRecycleViewAdapter;
+import com.example.kursach_4_0.adapter.TownAdapter;
+import com.example.kursach_4_0.adapter.WeatherAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
+import com.example.kursach_4_0.api.model.Day;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SecondActivity extends AppCompatActivity implements MySecondRecyclerViewAdapter.ItemClickListener, MyThirdRecycleViewAdapter.ItemClickListener {
+public class SecondActivity extends AppCompatActivity implements TownAdapter.ItemClickListener, WeatherAdapter.ItemClickListener {
 
     ArrayList<Float> windSpeed = new ArrayList<>();
     ArrayList<Float> windDegree = new ArrayList<>();
@@ -27,6 +28,8 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
     ArrayList<Float> mainDataTemperature = new ArrayList<>();
     ArrayList<Date> dataDayList = new ArrayList<>();
 
+    WeatherAdapter weatherAdapter;
+    TownAdapter townAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,77 +38,63 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         Bundle arguments = getIntent().getExtras();
         String name = arguments.get("return").toString();
 
-        MySecondRecyclerViewAdapter mySecondRecyclerViewAdapter;
-        MyThirdRecycleViewAdapter myThirdRecycleViewAdapter;
+        weatherAdapter = new WeatherAdapter(this, weatherDescription);
+        townAdapter = new TownAdapter(this, null);
 
         // data to populate the RecyclerView with
-        ArrayList<String> towns = new ArrayList<>();
+        ArrayList<String> townList = new ArrayList<>();
 
-        for(int j=0; j < 7; j++){
-            myResponse(name, j);
-        }
-        System.out.println(weatherDescription);
-
-
-        towns.add(name);
-        towns.add("qwe");
-        towns.add("qwe");
-        towns.add("wer");
-        towns.add("ert");
-        towns.add("rty");
-        //towns.add("Odessa");
-
-        // set up the RecyclerView vertical
-        RecyclerView recyclerView = findViewById(R.id.rvSeconTowns);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mySecondRecyclerViewAdapter = new MySecondRecyclerViewAdapter(this, towns);
-        mySecondRecyclerViewAdapter.setClickListener(this);
-        recyclerView.setAdapter(mySecondRecyclerViewAdapter);
-
-        // set up the RecyclerView horizontal
-        RecyclerView recyclerViewSecond = findViewById(R.id.rvSeconTowns2);
-        recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this));
-        myThirdRecycleViewAdapter = new MyThirdRecycleViewAdapter(this, weatherDescription);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerViewSecond.setLayoutManager(llm);
-        myThirdRecycleViewAdapter.setClickListener(this);
-        recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
-
-        //myThirdRecycleViewAdapter.notifyItemRemoved();
-        // towns.clear();
-        // myThirdRecycleViewAdapter.notifyDataSetChanged();
-        // recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
-
-    }
-
-    public void myResponse(String location, final int i){
-        MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
+        MyService.createRetrofit().getData(name, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
-            public void onResponse( Call<Data> call, Response<Data> response) {
-                System.out.println(response.body().getDayList().get(i).getDate());
-                dataDayList.add(response.body().getDayList().get(i).getDate());
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                for (Day day : response.body().getDayList()) {
+                    dataDayList.add(day.getDate());
+                    mainDataTemperature.add(day.getMainData().getTemperature());
+                    windDegree.add(day.getWind().getDegree());
+                    windSpeed.add(day.getWind().getSpeed());
+                    weatherDescription.add(day.getWeather().getDescription());
 
-                System.out.println(response.body().getDayList().get(i).getMainData().getTemperature());
-                mainDataTemperature.add(response.body().getDayList().get(i).getMainData().getTemperature());
-
-                System.out.println(response.body().getDayList().get(i).getWind().getDegree());
-                windDegree.add(response.body().getDayList().get(i).getWind().getDegree());
-
-                System.out.println(response.body().getDayList().get(i).getWind().getSpeed());
-                windSpeed.add(response.body().getDayList().get(i).getWind().getSpeed());
-                //System.out.println(response.body().getDayList().get(i).getWeather().getId());
-
-                System.out.println(response.body().getDayList().get(i).getWeather().getDescription());
-                weatherDescription.add(response.body().getDayList().get(i).getWeather().getDescription());
+                    weatherAdapter.setData(weatherDescription);
+                    weatherAdapter.notifyDataSetChanged();
+                }
             }
-
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
             }
         });
+
+        System.out.println(weatherDescription);
+
+        townList.add(name);
+        townList.add("qwe");
+        townList.add("qwe");
+        townList.add("wer");
+        townList.add("ert");
+        townList.add("rty");
+        //townList.add("Odessa");
+
+        // set up the RecyclerView vertical
+        RecyclerView recyclerView = findViewById(R.id.recyclerTowns);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        townAdapter.setClickListener(this);
+        recyclerView.setAdapter(townAdapter);
+
+        // set up the RecyclerView horizontal
+        RecyclerView recyclerViewSecond = findViewById(R.id.recyclerWeather);
+        recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        weatherAdapter.setClickListener(this);
+
+        recyclerViewSecond.setAdapter(weatherAdapter);
+
+
+        //weatherAdapter.notifyItemRemoved();
+        // townList.clear();
+        // weatherAdapter.notifyDataSetChanged();
+        // recyclerViewSecond.setAdapter(weatherAdapter);
+
     }
 
 

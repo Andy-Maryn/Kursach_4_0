@@ -14,22 +14,26 @@ import com.example.kursach_4_0.SecondActivity;
 
 import java.util.List;
 
-public class MySecondRecyclerViewAdapter extends RecyclerView.Adapter<MySecondRecyclerViewAdapter.ViewHolder> {
+public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public MySecondRecyclerViewAdapter(Context context, List<String> data) {
+    public WeatherAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+    }
+
+    public void setData(List<String> mData) {
+        this.mData = mData;
     }
 
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
+        View view = mInflater.inflate(R.layout.recycleview_column, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +57,7 @@ public class MySecondRecyclerViewAdapter extends RecyclerView.Adapter<MySecondRe
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvTownName);
+            myTextView = itemView.findViewById(R.id.column3textView);
             itemView.setOnClickListener(this);
         }
 
