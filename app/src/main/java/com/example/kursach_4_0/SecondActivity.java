@@ -55,13 +55,14 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         towns.add("rty");
         //towns.add("Odessa");
 
-        // set up the RecyclerView
+        // set up the RecyclerView vertical
         RecyclerView recyclerView = findViewById(R.id.rvSeconTowns);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mySecondRecyclerViewAdapter = new MySecondRecyclerViewAdapter(this, towns);
         mySecondRecyclerViewAdapter.setClickListener(this);
         recyclerView.setAdapter(mySecondRecyclerViewAdapter);
 
+        // set up the RecyclerView horizontal
         RecyclerView recyclerViewSecond = findViewById(R.id.rvSeconTowns2);
         recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this));
         myThirdRecycleViewAdapter = new MyThirdRecycleViewAdapter(this, weatherDescription);
