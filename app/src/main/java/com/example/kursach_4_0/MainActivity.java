@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     MyRecyclerViewAdapter adapter;
 
-
+//on create
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
