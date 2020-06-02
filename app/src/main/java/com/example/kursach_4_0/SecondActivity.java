@@ -46,6 +46,7 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         recyclerView.setAdapter(mySecondRecyclerViewAdapter);
 
         RecyclerView recyclerViewSecond = findViewById(R.id.rvSeconTowns2);
+        recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this));
         myThirdRecycleViewAdapter = new MyThirdRecycleViewAdapter(this, towns);
         myThirdRecycleViewAdapter.setClickListener(this);
         recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
