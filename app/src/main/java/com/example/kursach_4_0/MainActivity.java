@@ -1,12 +1,11 @@
 package com.example.kursach_4_0;
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.kursach_4_0.adapter.MyRecyclerViewAdapter;
 import com.example.kursach_4_0.api.MyService;
@@ -19,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+    public static int REQUEST_CODE = 100;
     // MyAdapter adapter;
     String location = "Odessa";
     public String pos;
@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setResult(RESULT_CANCELED);
 
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
@@ -85,10 +87,11 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
         pos = adapter.getItem(position);
-        this.myResponse(pos);
-        adapter.handleClick(this);
+        //this.myResponse(pos);
+
+        adapter.handleClick(this, pos);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.kursach_4_0.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -81,8 +80,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         void onItemClick(View view, int position);
     }
 
-    public void handleClick(Context context) {
+    public void handleClick(Context context, String pos) {
         Intent intent = new Intent(context, SecondActivity.class);
+        intent.putExtra("result", pos);
+        // System.out.println(pos);
         context.startActivity(intent);
     }
 }

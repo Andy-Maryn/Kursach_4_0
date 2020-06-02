@@ -1,5 +1,6 @@
 package com.example.kursach_4_0;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -8,26 +9,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kursach_4_0.adapter.MyRecyclerViewAdapter;
 import com.example.kursach_4_0.adapter.MySecondRecyclerViewAdapter;
-import com.example.kursach_4_0.api.MyService;
-import com.example.kursach_4_0.api.model.Data;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class SecondActivity extends AppCompatActivity implements MySecondRecyclerViewAdapter.ItemClickListener {
 
+    public static int REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        MyRecyclerViewAdapter adapter;
+        setResult(RESULT_CANCELED);
+
+        MySecondRecyclerViewAdapter adapter;
 
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
@@ -35,13 +32,35 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         towns.add("Odessa");
 
         // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvTowns);
+        RecyclerView recyclerView = findViewById(R.id.rvSeconTowns);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, towns);
+        adapter = new MySecondRecyclerViewAdapter(this, towns);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Пользователь вышел из SecondActivity", Toast.LENGTH_SHORT).show();
+            }
+            else if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    String text = data.getStringExtra("result");
+                    if (text != null) {
+                        System.out.println(text);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
 }
