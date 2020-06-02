@@ -13,6 +13,7 @@ import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,12 +21,16 @@ import retrofit2.Response;
 
 public class SecondActivity extends AppCompatActivity implements MySecondRecyclerViewAdapter.ItemClickListener, MyThirdRecycleViewAdapter.ItemClickListener {
 
+    ArrayList<Float> windSpeed = new ArrayList<>();
+    ArrayList<Float> windDegree = new ArrayList<>();
+    ArrayList<String> weatherDescription = new ArrayList<>();
+    ArrayList<Float> mainDataTemperature = new ArrayList<>();
+    ArrayList<Date> dataDayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-
 
         Bundle arguments = getIntent().getExtras();
         String name = arguments.get("return").toString();
@@ -35,6 +40,13 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
 
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
+
+        for(int j=0; j < 7; j++){
+            myResponse(name, j);
+        }
+        System.out.println(weatherDescription);
+
+
         towns.add(name);
         towns.add("qwe");
         towns.add("qwe");
@@ -52,29 +64,43 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
 
         RecyclerView recyclerViewSecond = findViewById(R.id.rvSeconTowns2);
         recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this));
-        myThirdRecycleViewAdapter = new MyThirdRecycleViewAdapter(this, towns);
+        myThirdRecycleViewAdapter = new MyThirdRecycleViewAdapter(this, weatherDescription);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewSecond.setLayoutManager(llm);
         myThirdRecycleViewAdapter.setClickListener(this);
         recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
 
+        //myThirdRecycleViewAdapter.notifyItemRemoved();
+        // towns.clear();
+        myThirdRecycleViewAdapter.notifyDataSetChanged();
+        recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
+
+
+
         for(int j=0; j < 7; j++)
         myResponse(name, j);
-
-
     }
 
     public void myResponse(String location, final int i){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
+            public void onResponse( Call<Data> call, Response<Data> response) {
                 System.out.println(response.body().getDayList().get(i).getDate());
+                dataDayList.add(response.body().getDayList().get(i).getDate());
+
                 System.out.println(response.body().getDayList().get(i).getMainData().getTemperature());
+                mainDataTemperature.add(response.body().getDayList().get(i).getMainData().getTemperature());
+
                 System.out.println(response.body().getDayList().get(i).getWind().getDegree());
+                windDegree.add(response.body().getDayList().get(i).getWind().getDegree());
+
                 System.out.println(response.body().getDayList().get(i).getWind().getSpeed());
+                windSpeed.add(response.body().getDayList().get(i).getWind().getSpeed());
                 //System.out.println(response.body().getDayList().get(i).getWeather().getId());
+
                 System.out.println(response.body().getDayList().get(i).getWeather().getDescription());
+                weatherDescription.add(response.body().getDayList().get(i).getWeather().getDescription());
             }
 
             @Override
