@@ -30,7 +30,8 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         Bundle arguments = getIntent().getExtras();
         String name = arguments.get("return").toString();
 
-        MySecondRecyclerViewAdapter adapter;
+        MySecondRecyclerViewAdapter mySecondRecyclerViewAdapter;
+        MyThirdRecycleViewAdapter myThirdRecycleViewAdapter;
 
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
@@ -40,9 +41,15 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvSeconTowns);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MySecondRecyclerViewAdapter(this, towns);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+        mySecondRecyclerViewAdapter = new MySecondRecyclerViewAdapter(this, towns);
+        mySecondRecyclerViewAdapter.setClickListener(this);
+        recyclerView.setAdapter(mySecondRecyclerViewAdapter);
+
+        RecyclerView recyclerViewSecond = findViewById(R.id.rvSeconTowns2);
+        myThirdRecycleViewAdapter = new MyThirdRecycleViewAdapter(this, towns);
+        myThirdRecycleViewAdapter.setClickListener(this);
+        recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
+
         for(int j=0; j < 7; j++)
         myResponse(name, 0);
 
