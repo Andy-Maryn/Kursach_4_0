@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kursach_4_0.adapter.MyRecyclerViewAdapter;
+import com.example.kursach_4_0.adapter.MySecondRecyclerViewAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 
@@ -18,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity implements MySecondRecyclerViewAdapter.ItemClickListener {
 
 
     @Override
