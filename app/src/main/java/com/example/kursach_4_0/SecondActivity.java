@@ -51,7 +51,7 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         recyclerViewSecond.setAdapter(myThirdRecycleViewAdapter);
 
         for(int j=0; j < 7; j++)
-        myResponse(name, 0);
+        myResponse(name, j);
 
 
     }
