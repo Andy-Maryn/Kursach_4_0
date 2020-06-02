@@ -36,6 +36,11 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
         towns.add(name);
+        towns.add("qwe");
+        towns.add("qwe");
+        towns.add("wer");
+        towns.add("ert");
+        towns.add("rty");
         //towns.add("Odessa");
 
         // set up the RecyclerView
