@@ -8,8 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kursach_4_0.adapter.MySecondRecyclerViewAdapter;
+import com.example.kursach_4_0.api.MyService;
+import com.example.kursach_4_0.api.model.Data;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SecondActivity extends AppCompatActivity implements MySecondRecyclerViewAdapter.ItemClickListener {
 
@@ -36,10 +42,31 @@ public class SecondActivity extends AppCompatActivity implements MySecondRecycle
         adapter = new MySecondRecyclerViewAdapter(this, towns);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        for(int j=0; j < 7; j++)
+        myResponse(name, 0);
 
 
     }
 
+    public void myResponse(String location, final int i){
+        MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                System.out.println(response.body().getDayList().get(i).getDate());
+                System.out.println(response.body().getDayList().get(i).getMainData().getTemperature());
+                System.out.println(response.body().getDayList().get(i).getWind().getDegree());
+                System.out.println(response.body().getDayList().get(i).getWind().getSpeed());
+                //System.out.println(response.body().getDayList().get(i).getWeather().getId());
+                System.out.println(response.body().getDayList().get(i).getWeather().getDescription());
+            }
+
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+                System.out.println("error");
+                System.out.println(t.getMessage());
+            }
+        });
+    }
 
 
     @Override
