@@ -26,6 +26,20 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        MyRecyclerViewAdapter adapter;
+
+        // data to populate the RecyclerView with
+        ArrayList<String> towns = new ArrayList<>();
+        towns.add("London");
+        towns.add("Odessa");
+
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.rvTowns);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyRecyclerViewAdapter(this, towns);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+
 
     }
 
