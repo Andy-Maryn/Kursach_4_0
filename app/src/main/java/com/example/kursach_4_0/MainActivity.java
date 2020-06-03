@@ -1,7 +1,10 @@
 package com.example.kursach_4_0;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener , PopupMenu.OnMenuItemClickListener {
     // MyAdapter adapter;
     String location = "Odessa";
     public String pos;
@@ -65,6 +68,34 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
          **/
     }
 
+    public void showPopup(View v){
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.popup_menu);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item1:
+                Toast.makeText(this,"item 1 clicked",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item2:
+                Toast.makeText(this,"item 2 clicked",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item3:
+                Toast.makeText(this,"item 3 clicked",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item4:
+                Toast.makeText(this,"item 4 clicked",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item5:
+                Toast.makeText(this,"item 5 clicked",Toast.LENGTH_SHORT).show();
+                return true;
+            default: return false;
+        }
+    }
 
     public void myResponse(String location){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
