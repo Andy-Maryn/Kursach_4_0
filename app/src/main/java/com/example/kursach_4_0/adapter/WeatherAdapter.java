@@ -61,7 +61,15 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String description = mDataDescription.get(position);
-        String temperature = String.valueOf(mDataTemperature.get(position));
+        String temperature;
+        Float temp = Float.valueOf(Math.round((mDataTemperature.get(position)-273.15)*100)/100);
+        if (temp>=0){
+            temperature = "+" + String.valueOf(temp);
+        }
+        else {
+            temperature = "-" + String.valueOf(temp);
+        }
+        // String temperature = String.valueOf(temp);
         String windDegree = String.valueOf(mDataWindDegree.get(position));
         String windSpeed = String.valueOf(mDataWindSpeed.get(position));
         Date date = mDataDate.get(position);

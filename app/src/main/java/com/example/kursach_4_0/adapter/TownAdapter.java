@@ -12,25 +12,50 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
-    private ArrayList<Date> mData;
+    private List<String> mDatatemp;
+    private List<Date> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
+    private SimpleDateFormat formatter;
+    // HashSet<Date> dateHashSet = new HashSet<>();
+
     // data is passed into the constructor
     public TownAdapter(Context context, ArrayList<Date> data) {
+        this.formatter =  new SimpleDateFormat("EEEE -dd MMMM");
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        // this.mDatatemp = new HashSet <String>();
+        LinkedHashSet<String> datatemp = new LinkedHashSet<String>();
+        // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        for(Date date: this.mData){
+            String today = this.formatter.format(date);
+            datatemp.add(today);
+        }
+        this.mDatatemp = new ArrayList<String>(datatemp);
+        // String[] tempArrey = {};
+        // tempArrey = this.mDatatemp.toArray(new String[this.mDatatemp.size()]);
+
     }
 
     public void setData(ArrayList<Date> mData) {
         this.mData = mData;
+        LinkedHashSet <String> datatemp = new LinkedHashSet<String>();
+        //Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        for(Date date: this.mData){
+            String today =  this.formatter.format(date);
+            datatemp.add(today);
+        }
+        this.mDatatemp = new ArrayList<String>(datatemp);
     }
 
     // inflates the row layout from xml when needed
@@ -43,16 +68,28 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Date date = mData.get(position);
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String today = formatter.format(date);
+        HashSet<String> datatemp = new HashSet <String>();
+        //Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        // Date date = mData.get(position);
+        // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        /*
+        for(String today: mDatatemp){
+            holder.myTextView.setText(today);
+        }
+        */
+        String today = mDatatemp.get(position);
         holder.myTextView.setText(today);
+        // String today = mDatatemp.get(position);
+
+        //  holder.myTextView.setText(today);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mDatatemp.size();
     }
 
 
@@ -74,8 +111,8 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     }
 
     // convenience method for getting data at click position
-    public Date getItem(int id) {
-        return mData.get(id);
+    public String getItem(int id) {
+        return mDatatemp.get(id);
     }
 
     // allows clicks events to be caught
