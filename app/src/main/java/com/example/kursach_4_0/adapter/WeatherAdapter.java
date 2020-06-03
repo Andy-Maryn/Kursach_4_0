@@ -69,9 +69,42 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             temperature = "-" + String.valueOf(temp);
         }
         // String temperature = String.valueOf(temp);
-        String windDegree = String.valueOf(mDataWindDegree.get(position));
+        //String windDegree = String.valueOf(mDataWindDegree.get(position));
         String windSpeed = String.valueOf(mDataWindSpeed.get(position));
         Date date = mDataDate.get(position);
+
+        String windDegree = "";
+        int degree = Math.round(mDataWindDegree.get(position)/45);
+                switch (degree){
+                    case 0:
+                        windDegree = "северный";
+                        break;
+                    case 1:
+                        windDegree = "северо-западный";
+                        break;
+                    case 2:
+                        windDegree = "западный";
+                        break;
+                    case 3:
+                        windDegree = "юго-западный";
+                        break;
+                    case 4:
+                        windDegree = "южный";
+                        break;
+                    case 5:
+                        windDegree = "юго-восточный";
+                        break;
+                    case 6:
+                        windDegree = "восточный";
+                        break;
+                    case 7:
+                        windDegree = "северо-восточный";
+                        break;
+                    case 8:
+                        windDegree = "северный";
+                        break;
+        }
+
 
         Format formatter = new SimpleDateFormat("E HH:mm");
         String today = formatter.format(date);
@@ -79,6 +112,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
         holder.myTextViewDescription.setText(description);
         holder.myTextViewTemperature.setText(temperature);
+
         holder.myTextViewWindDegree.setText(windDegree);
         holder.myTextViewWindSpeed.setText(windSpeed);
         holder.myTextViewDate.setText(today);

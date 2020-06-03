@@ -54,7 +54,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         setContentView(R.layout.activity_second);
 
         Bundle arguments = getIntent().getExtras();
-        String name = arguments.get("return").toString();
+        final String name = arguments.get("return").toString();
+        System.out.println(name);
 
         weatherAdapter = new WeatherAdapter(this,
                 weatherDescription,
@@ -85,6 +86,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                     weatherAdapter.notifyDataSetChanged();
                     townAdapter.notifyDataSetChanged();
                 }
+                TextView textView = findViewById(R.id.town);
+                textView.setText(String.valueOf(name));
             }
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
@@ -137,9 +140,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                 List<Date> listData = weatherAdapter.getItemTemp();
                 // System.out.println(weatherAdapter.getItemTemp());
                 TextView textView = findViewById(R.id.today);
-                SimpleDateFormat formatter = new SimpleDateFormat("EEEE -dd MMMM");
+                SimpleDateFormat formatter = new SimpleDateFormat("EEEE   dd MMMM");
                 if (iterator<listData.size() && iterator>=0){
-
                     Date item = listData.get(iterator);
                     String today = formatter.format(item);
                     textView.setText(String.valueOf(today));
