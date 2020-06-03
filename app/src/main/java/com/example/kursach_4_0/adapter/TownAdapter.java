@@ -91,19 +91,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // total number of rows
     @Override
     public int getItemCount() {
-        return mDataString.size();
-    }
-
-
-
-    //@Override
-    public int getDataStringCount() {
-        return this.mDataString.size();
-    }
-
-    //@Override
-    public List<String> getDataString() {
-        return this.mDataString;
+        return mDataHashSet.size();
     }
 
 
