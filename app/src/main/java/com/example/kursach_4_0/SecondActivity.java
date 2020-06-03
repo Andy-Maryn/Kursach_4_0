@@ -2,6 +2,7 @@ package com.example.kursach_4_0;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +17,10 @@ import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 import com.example.kursach_4_0.api.model.Day;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +33,11 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
     ArrayList<String> weatherDescription = new ArrayList<>();
     ArrayList<Float> mainDataTemperature = new ArrayList<>();
     ArrayList<Date> dataDayList = new ArrayList<>();
-    int picselItem = 0;
+    int picselItem = 1;
     int picselSee = 0;
     private static final int picselSize = 10920;
+    private int tempCurrentItem = 0;
+    int currentPosition = 0;
 
     GridLayoutManager layoutManager;
 
@@ -126,11 +131,25 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                 super.onScrolled(recyclerView, dx, dy);
                 picselItem = picselSize/recyclerViewSecond.getAdapter().getItemCount();
                 picselSee += dx;
-                int iterator = 102;
-                if (picselItem>0){
-                    iterator = Math.round(picselSee/picselItem);
-                    System.out.println(iterator);
+                int iterator = 0;
+                iterator = Math.round(picselSee/picselItem);
+                //System.out.println(iterator);
+                List<Date> listData = weatherAdapter.getItemTemp();
+                // System.out.println(weatherAdapter.getItemTemp());
+                TextView textView = findViewById(R.id.today);
+                SimpleDateFormat formatter = new SimpleDateFormat("EEEE -dd MMMM");
+                if (iterator<listData.size() && iterator>=0){
+
+                    Date item = listData.get(iterator);
+                    String today = formatter.format(item);
+                    textView.setText(String.valueOf(today));
+                    currentPosition = iterator;
                 }
+                tempCurrentItem = picselSee;
+
+                // int index = listData.indexOf(item);
+
+
 
                 //System.out.println(picselSee);
                 //System.out.println(picselItem);
@@ -147,7 +166,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                // System.out.println("!!!!!!!!!!!!!!!" + newState);
+
+                System.out.println("!!!!!!!!!!!!!!!" + newState);
                 // System.out.println();
             }
         };
@@ -165,9 +185,64 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
     public void onTownClick(View view, int position) {
         int tempSize;
         int tempPosition = 0;
+
+
         tempSize = recyclerView.getAdapter().getItemCount();
-        System.out.println(tempSize);
+        //System.out.println(tempSize);
+
         recyclerViewSecond.scrollToPosition(tempPosition);
+        String item = townAdapter.getItem(position);
+        //System.out.println(item);
+
+        //System.out.println(townAdapter.getItemString());
+
+        List<Date> listData = weatherAdapter.getItemTemp();
+        ArrayList<String> tempList = new ArrayList<String>();
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE -dd MMMM");
+        for(Date date: listData){
+            String today = formatter.format(date);
+            tempList.add(today);
+        }
+        //System.out.println(tempList);
+        int index = tempList.indexOf(item);
+        //System.out.println(index);
+        int iterator = 0;
+
+
+        picselItem = picselSize/recyclerViewSecond.getAdapter().getItemCount();
+        iterator = Math.round(picselSee/picselItem);
+
+        System.out.println(index);
+        System.out.println(iterator);
+        if (index >iterator){
+            recyclerViewSecond.scrollToPosition(index+2);
+            picselSee = picselItem*(index+2);
+            int tempIter = 0;
+            System.out.println(picselSee);
+            if (picselSee>picselSize){
+                int temp = picselSee - picselSize;
+                System.out.println(temp);
+                tempIter = Math.round(((temp+1) / picselItem));
+                System.out.println(tempIter);
+                recyclerViewSecond.scrollToPosition(index+2 - 2/tempIter);
+                picselSee = picselItem*(index+2 - 2/tempIter);
+            }
+
+            System.out.println(picselSee);
+        }
+        else {
+            recyclerViewSecond.scrollToPosition(index);
+            picselSee = picselItem*(index);
+            //System.out.println("!!!!!!!!!!!!!!!!!!!");
+        }
+        currentPosition = index;
+        //TextView textView = findViewById(R.id.today);
+        //textView.setText(String.valueOf(item));
+
+        //recyclerViewSecond.scrollToPosition(index+2);
+        tempCurrentItem = picselSee;
+
+
 
     }
 

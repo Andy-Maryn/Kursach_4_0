@@ -91,6 +91,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         return mDataDescription.size();
     }
 
+    public List<Date> getItemTemp() {
+        return mDataDate;
+    }
+
+
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

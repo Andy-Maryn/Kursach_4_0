@@ -22,7 +22,7 @@ import java.util.List;
 public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
     private List<String> mDataHashSet;
-    private List<String> mDataString;
+    private ArrayList<String> mDataString = new ArrayList<String>();
     private List<Date> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
@@ -40,7 +40,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         for(Date date: this.mData){
             String today = this.formatter.format(date);
-            this.mDataString.add(String.valueOf(date));
+            this.mDataString.add(today);
             datatemp.add(today);
         }
         this.mDataHashSet = new ArrayList<String>(datatemp);
@@ -94,6 +94,10 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         return mDataHashSet.size();
     }
 
+    public ArrayList<String> getItemString() {
+        return mDataString;
+    }
+
 
 
     // stores and recycles views as they are scrolled off screen
@@ -116,6 +120,10 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // convenience method for getting data at click position
     public String getItem(int id) {
         return mDataHashSet.get(id);
+    }
+
+    public List<String> getItemTemp() {
+        return mDataHashSet;
     }
 
     // allows clicks events to be caught
