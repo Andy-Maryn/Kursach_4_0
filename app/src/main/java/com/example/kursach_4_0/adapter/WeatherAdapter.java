@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
-import java.util.List;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
@@ -59,11 +61,20 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String description = mDataDescription.get(position);
-        Float temperature = mDataTemperature.get(position);
-        Float windDegree = mDataWindDegree.get(position);
-        Float windSpeed = mDataWindSpeed.get(position);
+        String temperature = String.valueOf(mDataTemperature.get(position));
+        String windDegree = String.valueOf(mDataWindDegree.get(position));
+        String windSpeed = String.valueOf(mDataWindSpeed.get(position));
         Date date = mDataDate.get(position);
+
+        Format formatter = new SimpleDateFormat("E HH:mm");
+        String today = formatter.format(date);
+
+
         holder.myTextViewDescription.setText(description);
+        holder.myTextViewTemperature.setText(temperature);
+        holder.myTextViewWindDegree.setText(windDegree);
+        holder.myTextViewWindSpeed.setText(windSpeed);
+        holder.myTextViewDate.setText(today);
 
     }
 
@@ -85,6 +96,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         ViewHolder(View itemView) {
             super(itemView);
             myTextViewDescription = itemView.findViewById(R.id.columnTextViewDescription);
+            myTextViewTemperature = itemView.findViewById(R.id.columnTextViewTemperature);
+            myTextViewWindDegree = itemView.findViewById(R.id.columnTextViewWindDegree);
+            myTextViewWindSpeed = itemView.findViewById(R.id.columnTextViewWindSpeed);
+            myTextViewDate = itemView.findViewById(R.id.columnTextViewDate);
+
             itemView.setOnClickListener(this);
         }
 
