@@ -42,7 +42,12 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         Bundle arguments = getIntent().getExtras();
         String name = arguments.get("return").toString();
 
-        weatherAdapter = new WeatherAdapter(this, weatherDescription);
+        weatherAdapter = new WeatherAdapter(this,
+                weatherDescription,
+                mainDataTemperature,
+                windDegree,
+                windSpeed,
+                dataDayList);
         townAdapter = new TownAdapter(this, dataDayList);
 
 

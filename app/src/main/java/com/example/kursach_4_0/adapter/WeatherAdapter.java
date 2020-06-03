@@ -13,21 +13,39 @@ import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
 import java.util.List;
+import java.util.Date;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
-    private List<String> mData;
+    // private List<???> mDataImage;
+    private List<String> mDataDescription;
+    private List<Float> mDataTemperature;
+    private List<Float> mDataWindDegree;
+    private List<Float> mDataWindSpeed;
+    private List<Date> mDataDate;
+
+
+
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public WeatherAdapter(Context context, List<String> data) {
+    public WeatherAdapter(Context context,
+                          List<String> description,
+                          List<Float> temperature,
+                          List<Float> degree,
+                          List<Float> speed,
+                          List<Date> date) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.mDataDescription = description;
+        this.mDataTemperature = temperature;
+        this.mDataWindDegree = degree;
+        this.mDataWindSpeed = speed;
+        this.mDataDate = date;
     }
 
     public void setData(List<String> mData) {
-        this.mData = mData;
+        this.mDataDescription = mData;
     }
 
     // inflates the row layout from xml when needed
@@ -40,24 +58,33 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String town = mData.get(position);
-        holder.myTextView.setText(town);
+        String description = mDataDescription.get(position);
+        Float temperature = mDataTemperature.get(position);
+        Float windDegree = mDataWindDegree.get(position);
+        Float windSpeed = mDataWindSpeed.get(position);
+        Date date = mDataDate.get(position);
+        holder.myTextViewDescription.setText(description);
+
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mDataDescription.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        TextView myTextViewDescription;
+        TextView myTextViewTemperature;
+        TextView myTextViewWindDegree;
+        TextView myTextViewWindSpeed;
+        TextView myTextViewDate;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.column3textView);
+            myTextViewDescription = itemView.findViewById(R.id.columnTextViewDescription);
             itemView.setOnClickListener(this);
         }
 
@@ -70,7 +97,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
     // convenience method for getting data at click position
     public String getItem(int id) {
-        return mData.get(id);
+        return mDataDescription.get(id);
     }
 
     // allows clicks events to be caught
