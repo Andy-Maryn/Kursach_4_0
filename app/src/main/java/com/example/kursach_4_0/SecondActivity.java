@@ -30,6 +30,10 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
 
     WeatherAdapter weatherAdapter;
     TownAdapter townAdapter;
+
+    RecyclerView recyclerView;
+    RecyclerView recyclerViewSecond;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,9 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
 
         weatherAdapter = new WeatherAdapter(this, weatherDescription);
         townAdapter = new TownAdapter(this, dataDayList);
+
+
+
 
         // data to populate the RecyclerView with
         ArrayList<String> townList = new ArrayList<>();
@@ -67,7 +74,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
             }
         });
 
-        System.out.println(weatherDescription);
+        //System.out.println(weatherDescription);
 
         townList.add(name);
         townList.add("qwe");
@@ -78,16 +85,20 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         //townList.add("Odessa");
 
         // set up the RecyclerView vertical
-        RecyclerView recyclerView = findViewById(R.id.recyclerTowns);
+        // RecyclerView recyclerView = findViewById(R.id.recyclerTowns);
+        recyclerView = findViewById(R.id.recyclerTowns);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-
         townAdapter.setClickListener(this);
+
         recyclerView.setAdapter(townAdapter);
 
         // set up the RecyclerView horizontal
-        RecyclerView recyclerViewSecond = findViewById(R.id.recyclerWeather);
+        // RecyclerView recyclerViewSecond = findViewById(R.id.recyclerWeather);
+        recyclerViewSecond = findViewById(R.id.recyclerWeather);
         recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         weatherAdapter.setClickListener(this);
+
+        //recyclerViewSecond.scrollToPosition(7);
 
         recyclerViewSecond.setAdapter(weatherAdapter);
 
@@ -101,7 +112,13 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
 
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onTownClick(View view, int position) {
+        recyclerViewSecond.scrollToPosition(7);
+
+    }
+
+    @Override
+    public void onWeatherClick(View view, int position) {
 
     }
 }

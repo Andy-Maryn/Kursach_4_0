@@ -63,7 +63,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onWeatherClick(view, getAdapterPosition());
 
         }
     }
@@ -80,7 +80,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onWeatherClick(View view, int position);
     }
 
     public void handleClick(Context context) {

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -41,8 +43,10 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Date town = mData.get(position);
-        // holder.myTextView.setText((CharSequence) town);
+        Date date = mData.get(position);
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String today = formatter.format(date);
+        holder.myTextView.setText(today);
     }
 
     // total number of rows
@@ -64,7 +68,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onTownClick(view, getAdapterPosition());
 
         }
     }
@@ -81,7 +85,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onTownClick(View view, int position);
     }
 
     public void handleClick(Context context) {
