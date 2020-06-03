@@ -1,7 +1,6 @@
 package com.example.kursach_4_0.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +134,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     }
 
     public void handleClick(Context context) {
-        Intent intent = new Intent(context, SecondActivity.class);
-        context.startActivity(intent);
+        //Intent intent = new Intent(context, SecondActivity.class);
+        //context.startActivity(intent);
     }
 }

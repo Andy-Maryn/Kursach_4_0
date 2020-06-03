@@ -101,7 +101,7 @@
             android:layout_width="69dp"
             android:layout_height="63dp"
             android:layout_marginTop="10dp"
-            tools:src="@drawable/full_sun"
+            android:src="@drawable/sun_cloud"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"

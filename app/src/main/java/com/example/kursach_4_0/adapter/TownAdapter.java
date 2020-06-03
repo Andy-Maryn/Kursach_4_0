@@ -21,7 +21,8 @@ import java.util.List;
 
 public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
-    private List<String> mDatatemp;
+    private List<String> mDataHashSet;
+    private List<String> mDataString;
     private List<Date> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
@@ -39,9 +40,10 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         for(Date date: this.mData){
             String today = this.formatter.format(date);
+            this.mDataString.add(String.valueOf(date));
             datatemp.add(today);
         }
-        this.mDatatemp = new ArrayList<String>(datatemp);
+        this.mDataHashSet = new ArrayList<String>(datatemp);
         // String[] tempArrey = {};
         // tempArrey = this.mDatatemp.toArray(new String[this.mDatatemp.size()]);
 
@@ -55,7 +57,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
             String today =  this.formatter.format(date);
             datatemp.add(today);
         }
-        this.mDatatemp = new ArrayList<String>(datatemp);
+        this.mDataHashSet = new ArrayList<String>(datatemp);
     }
 
     // inflates the row layout from xml when needed
@@ -79,7 +81,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
             holder.myTextView.setText(today);
         }
         */
-        String today = mDatatemp.get(position);
+        String today = mDataHashSet.get(position);
         holder.myTextView.setText(today);
         // String today = mDatatemp.get(position);
 
@@ -89,8 +91,21 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // total number of rows
     @Override
     public int getItemCount() {
-        return mDatatemp.size();
+        return mDataString.size();
     }
+
+
+
+    //@Override
+    public int getDataStringCount() {
+        return this.mDataString.size();
+    }
+
+    //@Override
+    public List<String> getDataString() {
+        return this.mDataString;
+    }
+
 
 
     // stores and recycles views as they are scrolled off screen
@@ -112,13 +127,15 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
     // convenience method for getting data at click position
     public String getItem(int id) {
-        return mDatatemp.get(id);
+        return mDataHashSet.get(id);
     }
 
     // allows clicks events to be caught
     public void setClickListener(SecondActivity itemClickListener) {
         this.mClickListener = itemClickListener;
     }
+
+
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
