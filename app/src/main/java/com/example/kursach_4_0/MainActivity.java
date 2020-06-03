@@ -3,7 +3,9 @@ package com.example.kursach_4_0;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.PopupMenu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener , PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener  {
     // MyAdapter adapter;
     String location = "Odessa";
     public String pos;
@@ -49,8 +51,24 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
 
 
+        //spinner
+        ArrayAdapter<String> spTownAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, towns);
+        spTownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinner = (Spinner) findViewById(R.id.cities);
+        spinner.setAdapter(spTownAdapter);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+             /**  adapter.handleClick(this, pos); **/
+           }
 
+           @Override
+           public void onNothingSelected(AdapterView<?> parent) {
+
+           }
+        });
+    }
         // adapter = new MyAdapter(this);
         /**
         MyService.createRetrofit().getData("Odessa", MyService.KEY, "ru").enqueue(new Callback<Data>() {
@@ -66,36 +84,6 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             }
         });
          **/
-    }
-
-    public void showPopup(View v){
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.popup_menu);
-        popup.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                Toast.makeText(this,"item 1 clicked",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item2:
-                Toast.makeText(this,"item 2 clicked",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item3:
-                Toast.makeText(this,"item 3 clicked",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item4:
-                Toast.makeText(this,"item 4 clicked",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item5:
-                Toast.makeText(this,"item 5 clicked",Toast.LENGTH_SHORT).show();
-                return true;
-            default: return false;
-        }
-    }
 
     public void myResponse(String location){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {

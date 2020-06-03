@@ -10,15 +10,13 @@
         android:layout_height="match_parent"
         android:transformPivotX="@android:dimen/thumbnail_width" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="67dp"
-        android:layout_height="38dp"
+    <Spinner
+        android:id="@+id/cities"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:onClick="showPopup"
-        android:text="menu" />
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp" />
 
 </RelativeLayout>
