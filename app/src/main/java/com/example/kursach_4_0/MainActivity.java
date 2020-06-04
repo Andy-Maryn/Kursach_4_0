@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         System.out.println(pos);
         location = pos;
 
-
-
-
-
         // adapter = new MyAdapter(this);
         /*
         MyService.createRetrofit().getData("Odessa", MyService.KEY, "ru").enqueue(new Callback<Data>() {
@@ -76,17 +72,17 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
     public void onClickButton(View view){
         System.out.println("start");
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
-        EditText text = textInputLayout.getEditText();
-        assert text != null;
 
 
         try {
+            EditText text = textInputLayout.getEditText();
             pos = String.valueOf(text.getText());
             Float.parseFloat(pos);
             Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
             //ststus = false;
         }
         catch (Exception ex){
+            EditText text = textInputLayout.getEditText();
             pos = String.valueOf(text.getText());
             // Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
             // ststus = false;

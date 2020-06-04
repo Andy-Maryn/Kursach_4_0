@@ -14,6 +14,7 @@ import com.example.kursach_4_0.SecondActivity;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     private List<Float> mDataWindDegree;
     private List<Float> mDataWindSpeed;
     private List<Date> mDataDate;
+    private ArrayList<String> mDataString;
+    private boolean aBoolean;
+    private String tempDataDate;
 
+    int imagetempDataDate = R.drawable.background_light;
 
 
     private LayoutInflater mInflater;
@@ -44,6 +49,15 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         this.mDataWindDegree = degree;
         this.mDataWindSpeed = speed;
         this.mDataDate = date;
+        /*
+        for (Date day : mDataDate){
+            SimpleDateFormat formatter = new SimpleDateFormat("EEEE   dd MMMM");
+            String today = formatter.format(day);
+            this.mDataString.add(today);
+        }
+        */
+
+
     }
 
     public void setData(List<String> mData) {
@@ -110,6 +124,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         Format formatter = new SimpleDateFormat("E HH:mm");
         String today = formatter.format(date);
 
+
         int image = R.drawable.rainbow;
         switch (description){
             case "ясно":
@@ -146,6 +161,32 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         holder.myTextViewWindSpeed.setText(windSpeed);
         holder.myTextViewDate.setText(today);
 
+        if (position != getItemCount()-1){
+            Date date2 = mDataDate.get(position+1);
+            String today2 = formatter.format(date);
+            if (today == today2.intern()){
+                holder.myView.setBackgroundResource(imagetempDataDate);
+            }
+            else {
+                if (imagetempDataDate == R.drawable.background_light)
+                imagetempDataDate = R.drawable.background_dark;
+                else imagetempDataDate = R.drawable.background_light;
+                holder.myView.setBackgroundResource(imagetempDataDate);
+            }
+
+        }
+
+
+
+
+        //int lastIndexOf()
+        //int indexStart =  mDataString.lastIndexOf(mDataString.get(0));
+        //System.out.println(indexStart);
+        //int indexCurrent =  mDataString.lastIndexOf(mDataString.get(position));
+        //System.out.println(indexCurrent);
+        //int countStart = getItemCount()-indexStart-1;
+        // int indexWeek = (int) Math.floor(((indexCurrent-indexStart) + 1) / 8);
+
     }
 
     // total number of rows
@@ -158,6 +199,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         return mDataDate;
     }
 
+    public int getImagetempDataDate(){
+        return 0;
+    }
+
 
 
     // stores and recycles views as they are scrolled off screen
@@ -168,6 +213,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         TextView myTextViewWindSpeed;
         TextView myTextViewDate;
         ImageView myImageViewDescription;
+        View myView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -177,6 +223,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             myTextViewWindSpeed = itemView.findViewById(R.id.columnTextViewWindSpeed);
             myTextViewDate = itemView.findViewById(R.id.columnTextViewDate);
             myImageViewDescription = itemView.findViewById(R.id.columnImageViewDescription);
+            myView = itemView.findViewById(R.id.columnView);
             itemView.setOnClickListener(this);
         }
 
