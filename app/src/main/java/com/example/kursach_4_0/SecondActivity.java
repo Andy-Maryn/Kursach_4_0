@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
-import com.example.kursach_4_0.adapter.TownAdapter;
+import com.example.kursach_4_0.adapter.DayWeekAdapter;
 import com.example.kursach_4_0.adapter.WeatherAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SecondActivity extends AppCompatActivity implements TownAdapter.ItemClickListener, WeatherAdapter.ItemClickListener {
+public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.ItemClickListener, WeatherAdapter.ItemClickListener {
 
     ArrayList<Float> windSpeed = new ArrayList<>();
     ArrayList<Float> windDegree = new ArrayList<>();
@@ -40,11 +40,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
     private static final int picselSize = 10920;
     int currentPosition = 0;
 
-    // GridLayoutManager layoutManager;
-
-
     WeatherAdapter weatherAdapter;
-    TownAdapter townAdapter;
+    DayWeekAdapter dayWeekAdapter;
 
     RecyclerView recyclerView;
     RecyclerView recyclerViewSecond;
@@ -65,13 +62,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                 windDegree,
                 windSpeed,
                 dataDayList);
-        townAdapter = new TownAdapter(this, dataDayList);
-
-
-
-
-        // data to populate the RecyclerView with
-        ArrayList<String> townList = new ArrayList<>();
+        dayWeekAdapter = new DayWeekAdapter(this, dataDayList);
 
         MyService.createRetrofit().getData(name, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
@@ -85,9 +76,9 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                     weatherDescription.add(day.getWeather().getDescription());
 
                     weatherAdapter.setData(weatherDescription);
-                    townAdapter.setData(dataDayList);
+                    dayWeekAdapter.setData(dataDayList);
                     weatherAdapter.notifyDataSetChanged();
-                    townAdapter.notifyDataSetChanged();
+                    dayWeekAdapter.notifyDataSetChanged();
                 }
                 TextView textView = findViewById(R.id.town);
                 textView.setText(name);
@@ -99,49 +90,27 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
             }
         });
 
-        //System.out.println(weatherDescription);
-
-        townList.add(name);
-        townList.add("qwe");
-        townList.add("qwe");
-        townList.add("wer");
-        townList.add("ert");
-        townList.add("rty");
-        //townList.add("Odessa");
-
-        // set up the RecyclerView vertical
-        // RecyclerView recyclerView = findViewById(R.id.recyclerTowns);
         recyclerView = findViewById(R.id.rvTown);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        townAdapter.setClickListener(this);
+        dayWeekAdapter.setClickListener(this);
 
-        recyclerView.setAdapter(townAdapter);
+        recyclerView.setAdapter(dayWeekAdapter);
 
-        // set up the RecyclerView horizontal
-        // RecyclerView recyclerViewSecond = findViewById(R.id.recyclerWeather);
         recyclerViewSecond = findViewById(R.id.recyclerWeather);
         recyclerViewSecond.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         weatherAdapter.setClickListener(this);
 
-        //recyclerViewSecond.scrollToPosition(7);
-
         recyclerViewSecond.setAdapter(weatherAdapter);
 
-        //GridLayoutManager layoutManager = ((GridLayoutManager)recyclerViewSecond.getLayoutManager());
-        //int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-
-        //recyclerViewSecond.OnScrollListener();
         final OnScrollListener onScrollListener = new OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 picselItem = picselSize/ Objects.requireNonNull(recyclerViewSecond.getAdapter()).getItemCount();
                 picselSee += dx;
-                int iterator = 0;
+                int iterator;
                 iterator = Math.round(picselSee/picselItem);
-                //System.out.println(iterator);
                 List<Date> listData = weatherAdapter.getItemTemp();
-                // System.out.println(weatherAdapter.getItemTemp());
                 TextView textView = findViewById(R.id.today);
                 SimpleDateFormat formatter = new SimpleDateFormat("EEEE   dd MMMM");
                 if (iterator<listData.size() && iterator>=0){
@@ -150,102 +119,53 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                     textView.setText(today);
                     currentPosition = iterator;
                 }
-
-                // int index = listData.indexOf(item);
-
-
-
-                //System.out.println(picselSee);
-                //System.out.println(picselItem);
-                //count += dx;
-                //System.out.println(count);
-                //System.out.println(dx);
-                //System.out.println(dy);
-                //System.out.println(recyclerView);
-                //GridLayoutManager layoutManager = ((GridLayoutManager)recyclerViewSecond.getLayoutManager());
-                //int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-
             }
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
-                // System.out.println("!!!!!!!!!!!!!!!" + newState);
-                // System.out.println();
             }
         };
-
         recyclerViewSecond.addOnScrollListener(onScrollListener);
-
-        //weatherAdapter.notifyItemRemoved();
-        // townList.clear();
-        // weatherAdapter.notifyDataSetChanged();
-        // recyclerViewSecond.setAdapter(weatherAdapter);
     }
 
 
     @Override
     public void onTownClick(View view, int position) {
-        // int tempSize;
         int tempPosition = 0;
-
-
-        // tempSize = Objects.requireNonNull(recyclerView.getAdapter()).getItemCount();
-        //System.out.println(tempSize);
-
         recyclerViewSecond.scrollToPosition(tempPosition);
-        String item = townAdapter.getItem(position);
-        //System.out.println(item);
-
-        //System.out.println(townAdapter.getItemString());
+        String item = dayWeekAdapter.getItem(position);
 
         List<Date> listData = weatherAdapter.getItemTemp();
-        ArrayList<String> tempList = new ArrayList<String>();
+        ArrayList<String> tempList = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE -dd MMMM");
         for(Date date: listData){
             String today = formatter.format(date);
             tempList.add(today);
         }
-        //System.out.println(tempList);
         int index = tempList.indexOf(item);
-        //System.out.println(index);
-        int iterator = 0;
+        int iterator;
 
 
         picselItem = picselSize/ Objects.requireNonNull(recyclerViewSecond.getAdapter()).getItemCount();
         iterator = Math.round(picselSee/picselItem);
-
-        //System.out.println(index);
-        //System.out.println(iterator);
         if (index >iterator){
             recyclerViewSecond.scrollToPosition(index+2);
             picselSee = picselItem*(index+2);
-            int tempIter = 0;
+            int tempIter;
             System.out.println(picselSee);
             if (picselSee>picselSize){
                 int temp = picselSee - picselSize;
-                //System.out.println(temp);
                 tempIter = Math.round(((temp+1) / picselItem));
-                //System.out.println(tempIter);
                 recyclerViewSecond.scrollToPosition(index+2 - 2/tempIter);
                 picselSee = picselItem*(index+2 - 2/tempIter);
             }
-
-            //System.out.println(picselSee);
         }
         else {
             recyclerViewSecond.scrollToPosition(index);
             picselSee = picselItem*(index);
-            //System.out.println("!!!!!!!!!!!!!!!!!!!");
         }
         currentPosition = index;
-        //TextView textView = findViewById(R.id.today);
-        //textView.setText(String.valueOf(item));
-
-        //recyclerViewSecond.scrollToPosition(index+2);
-
-
     }
 
     @Override

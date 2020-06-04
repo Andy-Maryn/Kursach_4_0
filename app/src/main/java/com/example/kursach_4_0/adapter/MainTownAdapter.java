@@ -17,14 +17,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public MyRecyclerViewAdapter(Context context, List<String> data) {
+    public MainTownAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -86,13 +86,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void handleClick(Context context, String pos) {
 
         Intent intent = new Intent(context, SecondActivity.class);
-        // System.out.println(pos);
         intent.putExtra("return", pos);
         context.startActivity(intent);
-
-
-
-
-
     }
 }

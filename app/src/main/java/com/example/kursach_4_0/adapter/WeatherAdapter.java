@@ -20,7 +20,6 @@ import java.util.List;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
-    // private List<???> mDataImage;
     private List<String> mDataDescription;
     private List<Float> mDataTemperature;
     private List<Float> mDataWindDegree;
@@ -49,15 +48,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         this.mDataWindDegree = degree;
         this.mDataWindSpeed = speed;
         this.mDataDate = date;
-        /*
-        for (Date day : mDataDate){
-            SimpleDateFormat formatter = new SimpleDateFormat("EEEE   dd MMMM");
-            String today = formatter.format(day);
-            this.mDataString.add(today);
-        }
-        */
-
-
     }
 
     public void setData(List<String> mData) {
@@ -83,8 +73,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         else {
             temperature = "-" + String.valueOf(temp);
         }
-        // String temperature = String.valueOf(temp);
-        //String windDegree = String.valueOf(mDataWindDegree.get(position));
         String windSpeed = String.valueOf(mDataWindSpeed.get(position));
         Date date = mDataDate.get(position);
 
@@ -192,18 +180,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         }
         holder.myView.setBackgroundResource(roundrect);
 
-
-
-
-
-        //int lastIndexOf()
-        //int indexStart =  mDataString.lastIndexOf(mDataString.get(0));
-        //System.out.println(indexStart);
-        //int indexCurrent =  mDataString.lastIndexOf(mDataString.get(position));
-        //System.out.println(indexCurrent);
-        //int countStart = getItemCount()-indexStart-1;
-        // int indexWeek = (int) Math.floor(((indexCurrent-indexStart) + 1) / 8);
-
     }
 
     // total number of rows
@@ -248,11 +224,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         }
     }
 
-    // convenience method for getting data at click position
-    public String getItem(int id) {
-        return mDataDescription.get(id);
-    }
-
     // allows clicks events to be caught
     public void setClickListener(SecondActivity itemClickListener) {
         this.mClickListener = itemClickListener;
@@ -263,8 +234,4 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         void onWeatherClick(View view, int position);
     }
 
-    public void handleClick(Context context) {
-        //Intent intent = new Intent(context, SecondActivity.class);
-        //context.startActivity(intent);
-    }
 }

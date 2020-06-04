@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kursach_4_0.adapter.MyRecyclerViewAdapter;
+import com.example.kursach_4_0.adapter.MainTownAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,13 +23,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity implements MainTownAdapter.ItemClickListener {
     // MyAdapter adapter;
     String location = "Odessa";
     public String pos;
     Context context = this;
 
-    MyRecyclerViewAdapter adapter;
+    MainTownAdapter adapter;
 
 //on create
     @Override
@@ -68,27 +68,11 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvTown);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, towns);
+        adapter = new MainTownAdapter(this, towns);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         System.out.println(pos);
         location = pos;
-
-        // adapter = new MyAdapter(this);
-        /*
-        MyService.createRetrofit().getData("Odessa", MyService.KEY, "ru").enqueue(new Callback<Data>() {
-            @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
-                System.out.println(response.body().getDayList().get(0).getDate());
-            }
-
-            @Override
-            public void onFailure(Call<Data> call, Throwable t) {
-                System.out.println("error");
-                System.out.println(t.getMessage());
-            }
-        });
-         */
     }
 
     public void onClickButton(View view){
@@ -106,14 +90,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         catch (Exception ex){
             EditText text = textInputLayout.getEditText();
             pos = String.valueOf(text.getText());
-            // Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
-            // ststus = false;
             this.myResponse(pos);
-
-            // this.myResponse(pos);
-
-            //adapter.handleClick(this, pos, status);
-            //ststus = new Boolean(false) ;
         }
 
     }
@@ -144,22 +121,13 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show()
         pos = adapter.getItem(position);
         try {
             Float.parseFloat(pos);
             Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
-            //ststus = false;
         }
         catch (Exception ex){
-            // Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
-            // ststus = false;
             this.myResponse(pos);
-
-            // this.myResponse(pos);
-
-            //adapter.handleClick(this, pos, status);
-            //ststus = new Boolean(false) ;
             }
         }
 

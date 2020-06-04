@@ -1,7 +1,6 @@
 package com.example.kursach_4_0.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,34 +11,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
+public class DayWeekAdapter extends RecyclerView.Adapter<DayWeekAdapter.ViewHolder> {
 
     private List<String> mDataHashSet;
-    private ArrayList<String> mDataString = new ArrayList<String>();
+    private ArrayList<String> mDataString = new ArrayList<>();
     private List<Date> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private List<String> mWeekDayString;
 
     private SimpleDateFormat formatter;
-    // HashSet<Date> dateHashSet = new HashSet<>();
 
     // data is passed into the constructor
-    public TownAdapter(Context context, ArrayList<Date> data) {
+    public DayWeekAdapter(Context context, ArrayList<Date> data) {
         this.formatter =  new SimpleDateFormat("EEEE -dd MMMM");
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        // this.mDatatemp = new HashSet <String>();
-        LinkedHashSet<String> datatemp = new LinkedHashSet<String>();
-        LinkedHashSet<String> WeekDayString = new LinkedHashSet<String>();
-        // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        LinkedHashSet<String> datatemp = new LinkedHashSet<>();
+        LinkedHashSet<String> WeekDayString = new LinkedHashSet<>();
         for(Date date: this.mData){
             String today = this.formatter.format(date);
             this.mDataString.add(today);
@@ -50,19 +47,15 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
             WeekDayString.add(today);
 
         }
-        this.mDataHashSet = new ArrayList<String>(datatemp);
-        this.mWeekDayString = new ArrayList<String>(WeekDayString);
-        // String[] tempArrey = {};
-        // tempArrey = this.mDatatemp.toArray(new String[this.mDatatemp.size()]);
-
+        this.mDataHashSet = new ArrayList<>(datatemp);
+        this.mWeekDayString = new ArrayList<>(WeekDayString);
     }
 
     public void setData(ArrayList<Date> mData) {
         this.mData = mData;
-        LinkedHashSet <String> datatemp = new LinkedHashSet<String>();
-        LinkedHashSet<String> WeekDayString = new LinkedHashSet<String>();
-        //Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        this.mWeekDayString = new ArrayList<String>();
+        LinkedHashSet <String> datatemp = new LinkedHashSet<>();
+        LinkedHashSet<String> WeekDayString = new LinkedHashSet<>();
+        this.mWeekDayString = new ArrayList<>();
         for(Date date: this.mData){
             String today = this.formatter.format(date);
             this.mDataString.add(today);
@@ -72,13 +65,14 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
             today = myFormatter.format(date);
             WeekDayString.add(today);
         }
-        this.mDataHashSet = new ArrayList<String>(datatemp);
-        this.mWeekDayString = new ArrayList<String>(WeekDayString);
+        this.mDataHashSet = new ArrayList<>(datatemp);
+        this.mWeekDayString = new ArrayList<>(WeekDayString);
     }
 
     // inflates the row layout from xml when needed
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.second_recyclerview_row, parent, false);
         return new ViewHolder(view);
     }
@@ -86,20 +80,8 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HashSet<String> datatemp = new HashSet <String>();
-        //Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        // Date date = mData.get(position);
-        // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        // Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        /*
-        for(String today: mDatatemp){
-            holder.myTextView.setText(today);
-        }
-        */
         String today = mDataHashSet.get(position);
         holder.myTextView.setText(today);
-        // String today = mDatatemp.get(position);
 
         today = mWeekDayString.get(position);
         int roundrect;
@@ -130,8 +112,6 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         }
 
         holder.myView.setBackgroundResource(roundrect);
-
-        //  holder.myTextView.setText(today);
     }
 
     // total number of rows
@@ -139,12 +119,6 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     public int getItemCount() {
         return mDataHashSet.size();
     }
-
-    public ArrayList<String> getItemString() {
-        return mDataString;
-    }
-
-
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -170,24 +144,14 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         return mDataHashSet.get(id);
     }
 
-    public List<String> getItemTemp() {
-        return mDataHashSet;
-    }
-
     // allows clicks events to be caught
     public void setClickListener(SecondActivity itemClickListener) {
         this.mClickListener = itemClickListener;
     }
-
-
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onTownClick(View view, int position);
     }
 
-    public void handleClick(Context context) {
-        Intent intent = new Intent(context, SecondActivity.class);
-        context.startActivity(intent);
-    }
 }
