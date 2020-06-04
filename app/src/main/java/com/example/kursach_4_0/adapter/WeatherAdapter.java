@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -109,6 +110,35 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         Format formatter = new SimpleDateFormat("E HH:mm");
         String today = formatter.format(date);
 
+        int image = R.drawable.rainbow;
+        switch (description){
+            case "ясно":
+                image = R.drawable.full_sun;
+                break;
+            case "переменная облачность":
+                image = R.drawable.sun_cloud;
+                break;
+            case "пасмурно":
+                image = R.drawable.cloud;
+                break;
+            case "дождь":
+                image = R.drawable.rain;
+                break;
+            case "снег":
+                image = R.drawable.snow;
+                break;
+            case "облачно с прояснениями":
+                image = R.drawable.cloudy_with_explanations;
+                break;
+            case "небольшой дождь":
+                image = R.drawable.small_rain;
+                break;
+            case "небольшая облачность":
+                image = R.drawable.overcast;
+                break;
+        }
+        holder.myImageViewDescription.setImageResource(image);
+
 
         holder.myTextViewDescription.setText(description);
         holder.myTextViewTemperature.setText(temperature);
@@ -138,6 +168,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         TextView myTextViewWindDegree;
         TextView myTextViewWindSpeed;
         TextView myTextViewDate;
+        ImageView myImageViewDescription;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -146,7 +177,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             myTextViewWindDegree = itemView.findViewById(R.id.columnTextViewWindDegree);
             myTextViewWindSpeed = itemView.findViewById(R.id.columnTextViewWindSpeed);
             myTextViewDate = itemView.findViewById(R.id.columnTextViewDate);
-
+            myImageViewDescription = itemView.findViewById(R.id.columnImageViewDescription);
             itemView.setOnClickListener(this);
         }
 

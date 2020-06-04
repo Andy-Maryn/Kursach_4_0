@@ -169,7 +169,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                System.out.println("!!!!!!!!!!!!!!!" + newState);
+                // System.out.println("!!!!!!!!!!!!!!!" + newState);
                 // System.out.println();
             }
         };
@@ -214,8 +214,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         picselItem = picselSize/recyclerViewSecond.getAdapter().getItemCount();
         iterator = Math.round(picselSee/picselItem);
 
-        System.out.println(index);
-        System.out.println(iterator);
+        //System.out.println(index);
+        //System.out.println(iterator);
         if (index >iterator){
             recyclerViewSecond.scrollToPosition(index+2);
             picselSee = picselItem*(index+2);
@@ -223,14 +223,14 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
             System.out.println(picselSee);
             if (picselSee>picselSize){
                 int temp = picselSee - picselSize;
-                System.out.println(temp);
+                //System.out.println(temp);
                 tempIter = Math.round(((temp+1) / picselItem));
-                System.out.println(tempIter);
+                //System.out.println(tempIter);
                 recyclerViewSecond.scrollToPosition(index+2 - 2/tempIter);
                 picselSee = picselItem*(index+2 - 2/tempIter);
             }
 
-            System.out.println(picselSee);
+            //System.out.println(picselSee);
         }
         else {
             recyclerViewSecond.scrollToPosition(index);
