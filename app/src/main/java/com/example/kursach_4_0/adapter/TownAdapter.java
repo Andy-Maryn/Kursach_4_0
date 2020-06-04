@@ -26,6 +26,7 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     private List<Date> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private List<String> mWeekDayString;
 
     private SimpleDateFormat formatter;
     // HashSet<Date> dateHashSet = new HashSet<>();
@@ -37,13 +38,20 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         this.mData = data;
         // this.mDatatemp = new HashSet <String>();
         LinkedHashSet<String> datatemp = new LinkedHashSet<String>();
+        LinkedHashSet<String> WeekDayString = new LinkedHashSet<String>();
         // Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         for(Date date: this.mData){
             String today = this.formatter.format(date);
             this.mDataString.add(today);
             datatemp.add(today);
+
+            SimpleDateFormat myFormatter = new SimpleDateFormat("EEEE");
+            today = myFormatter.format(date);
+            WeekDayString.add(today);
+
         }
         this.mDataHashSet = new ArrayList<String>(datatemp);
+        this.mWeekDayString = new ArrayList<String>(WeekDayString);
         // String[] tempArrey = {};
         // tempArrey = this.mDatatemp.toArray(new String[this.mDatatemp.size()]);
 
@@ -52,12 +60,20 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     public void setData(ArrayList<Date> mData) {
         this.mData = mData;
         LinkedHashSet <String> datatemp = new LinkedHashSet<String>();
+        LinkedHashSet<String> WeekDayString = new LinkedHashSet<String>();
         //Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        this.mWeekDayString = new ArrayList<String>();
         for(Date date: this.mData){
-            String today =  this.formatter.format(date);
+            String today = this.formatter.format(date);
+            this.mDataString.add(today);
             datatemp.add(today);
+
+            SimpleDateFormat myFormatter = new SimpleDateFormat("EEEE");
+            today = myFormatter.format(date);
+            WeekDayString.add(today);
         }
         this.mDataHashSet = new ArrayList<String>(datatemp);
+        this.mWeekDayString = new ArrayList<String>(WeekDayString);
     }
 
     // inflates the row layout from xml when needed
@@ -85,6 +101,37 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         holder.myTextView.setText(today);
         // String today = mDatatemp.get(position);
 
+        today = mWeekDayString.get(position);
+        int roundrect;
+        switch (today){
+            case "понедельник":
+                roundrect = R.drawable.monday;
+                break;
+            case "вторник":
+                roundrect = R.drawable.tuesday;
+                break;
+            case "среда":
+                roundrect = R.drawable.wednesday;
+                break;
+            case "четверг":
+                roundrect = R.drawable.thursday;
+                break;
+            case "пятница":
+                roundrect = R.drawable.friday;
+                break;
+            case "суббота":
+                roundrect = R.drawable.saturday;
+                break;
+            case "воскресенье":
+                roundrect = R.drawable.sunday;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + today);
+        }
+
+        holder.myView.setBackgroundResource(roundrect);
+
+
         //  holder.myTextView.setText(today);
     }
 
@@ -103,10 +150,12 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        View myView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.tvTownName);
+            myView = itemView.findViewById(R.id.view3);
             itemView.setOnClickListener(this);
         }
 

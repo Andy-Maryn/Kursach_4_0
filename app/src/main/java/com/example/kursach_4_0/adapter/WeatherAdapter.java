@@ -1,7 +1,6 @@
 package com.example.kursach_4_0.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,7 +164,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         formatter = new SimpleDateFormat("EEEE");
         today = formatter.format(date);
 
-        Drawable drawable;
         int roundrect;
         switch (today){
             case "понедельник":
