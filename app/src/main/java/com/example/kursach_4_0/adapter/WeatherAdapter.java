@@ -161,19 +161,28 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         holder.myTextViewWindSpeed.setText(windSpeed);
         holder.myTextViewDate.setText(today);
 
-        if (position != 0){
-            Date date2 = mDataDate.get(position-1);
-            String today2 = formatter.format(date);
-            if (today.equals(today2) == true){
-                holder.myView.setBackgroundResource(imagetempDataDate);
-            }
-            else {
-                if (imagetempDataDate == R.drawable.background_light)
-                imagetempDataDate = R.drawable.background_dark;
-                else imagetempDataDate = R.drawable.background_light;
-                //holder.myView.setBackgroundResource(imagetempDataDate);
-            }
+        formatter = new SimpleDateFormat("EEEE");
+        today = formatter.format(date);
+
+        switch (today){
+            case "понедельник":
+                break;
+            case "вторник":
+                break;
+            case "среда":
+                break;
+            case "четверг":
+                break;
+            case "пятница":
+                break;
+            case "суббота":
+                break;
+            case "воскресенье":
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + today);
         }
+
 
 
 
