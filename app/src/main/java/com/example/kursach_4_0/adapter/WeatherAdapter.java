@@ -171,7 +171,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
                 if (imagetempDataDate == R.drawable.background_light)
                 imagetempDataDate = R.drawable.background_dark;
                 else imagetempDataDate = R.drawable.background_light;
-                holder.myView.setBackgroundResource(imagetempDataDate);
+                //holder.myView.setBackgroundResource(imagetempDataDate);
             }
 
         }
@@ -199,9 +199,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         return mDataDate;
     }
 
-    public int getImagetempDataDate(){
-        return 0;
-    }
 
 
 
