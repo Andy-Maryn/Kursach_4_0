@@ -101,17 +101,20 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
             public void onResponse(@NotNull Call<Data> call, @NotNull Response<Data> response) {
-                assert response.body() != null;
-                System.out.println(response.body().getDayList().get(0).getWeather().getId());
-                System.out.println(response.body().getDayList().get(0).getDate());
-                adapter.handleClick(context, pos);
+                if (response.body() != null) {
+                    System.out.println(response.body().getDayList().get(0).getWeather().getId());
+                    System.out.println(response.body().getDayList().get(0).getDate());
+                    adapter.handleClick(context, pos);
+                } else {
+                    Toast.makeText(context, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
-                Toast.makeText(context, "ypor Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Ошибка сервера", Toast.LENGTH_SHORT).show();
             }
 
         });
