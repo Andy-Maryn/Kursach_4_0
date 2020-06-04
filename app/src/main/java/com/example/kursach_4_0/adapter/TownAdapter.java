@@ -105,25 +105,25 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
         int roundrect;
         switch (today){
             case "понедельник":
-                roundrect = R.drawable.monday;
+                roundrect = R.drawable.monday2;
                 break;
             case "вторник":
-                roundrect = R.drawable.tuesday;
+                roundrect = R.drawable.tuesday2;
                 break;
             case "среда":
-                roundrect = R.drawable.wednesday;
+                roundrect = R.drawable.wednesday2;
                 break;
             case "четверг":
-                roundrect = R.drawable.thursday;
+                roundrect = R.drawable.thursday2;
                 break;
             case "пятница":
-                roundrect = R.drawable.friday;
+                roundrect = R.drawable.friday2;
                 break;
             case "суббота":
-                roundrect = R.drawable.saturday;
+                roundrect = R.drawable.saturday2;
                 break;
             case "воскресенье":
-                roundrect = R.drawable.sunday;
+                roundrect = R.drawable.sunday2;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + today);
