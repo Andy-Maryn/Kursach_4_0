@@ -161,8 +161,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         holder.myTextViewWindSpeed.setText(windSpeed);
         holder.myTextViewDate.setText(today);
 
-        if (position != getItemCount()-1){
-            Date date2 = mDataDate.get(position+1);
+        if (position != 0){
+            Date date2 = mDataDate.get(position-1);
             String today2 = formatter.format(date);
             if (today.equals(today2) == true){
                 holder.myView.setBackgroundResource(imagetempDataDate);
