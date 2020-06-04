@@ -10,8 +10,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="393dp"
-        android:layout_height="44dp"
+        android:layout_width="914dp"
+        android:layout_height="50dp"
         android:layout_weight="1"
         android:background="@drawable/recycle_buttons"
         android:padding="10dp"
