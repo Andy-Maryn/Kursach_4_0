@@ -164,7 +164,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         if (position != getItemCount()-1){
             Date date2 = mDataDate.get(position+1);
             String today2 = formatter.format(date);
-            if (today == today2.intern()){
+            if (today.equals(today2) == true){
                 holder.myView.setBackgroundResource(imagetempDataDate);
             }
             else {
@@ -173,7 +173,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
                 else imagetempDataDate = R.drawable.background_light;
                 //holder.myView.setBackgroundResource(imagetempDataDate);
             }
-
         }
 
 
