@@ -131,7 +131,6 @@ public class TownAdapter extends RecyclerView.Adapter<TownAdapter.ViewHolder> {
 
         holder.myView.setBackgroundResource(roundrect);
 
-
         //  holder.myTextView.setText(today);
     }
 

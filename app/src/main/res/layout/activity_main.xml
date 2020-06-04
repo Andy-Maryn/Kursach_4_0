@@ -63,6 +63,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="277dp"
             android:layout_height="45dp"
+            android:inputType="textCapWords"
             android:hint="Введите название города" />
 
     </com.google.android.material.textfield.TextInputLayout>
