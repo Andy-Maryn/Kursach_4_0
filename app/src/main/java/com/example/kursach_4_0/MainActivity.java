@@ -40,8 +40,30 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
         towns.add("Лондон");
+        towns.add("Винница");
+        towns.add("Запорожье");
+        towns.add("Луганск");
+        towns.add("Николаев");
+        towns.add("Сумы");
+        towns.add("Херсон");
+        towns.add("Днепр");
+        towns.add("Ивано-Франковск");
+        towns.add("Луцк");
         towns.add("Одесса");
-        towns.add("123");
+        towns.add("Тернополь");
+        towns.add("Хмельницкий");
+        towns.add("Донецк");
+        towns.add("Киев");
+        towns.add("Львов");
+        towns.add("Полтава");
+        towns.add("Ужгород");
+        towns.add("Черкассы");
+        towns.add("Житомир");
+        towns.add("Кривой Рог");
+        towns.add("Мариуполь");
+        towns.add("Ровно");
+        towns.add("Харьков");
+        towns.add("Чернигов");
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvTown);
