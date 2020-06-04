@@ -13,6 +13,8 @@ import com.example.kursach_4_0.adapter.MyRecyclerViewAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
 
         // adapter = new MyAdapter(this);
-        /**
+        /*
         MyService.createRetrofit().getData("Odessa", MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
@@ -66,21 +68,22 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                 System.out.println(t.getMessage());
             }
         });
-         **/
+         */
     }
 
 
-    public void myResponse(String location, View view, int position){
+    public void myResponse(String location){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
+            public void onResponse(@NotNull Call<Data> call, @NotNull Response<Data> response) {
+                assert response.body() != null;
                 System.out.println(response.body().getDayList().get(0).getWeather().getId());
                 System.out.println(response.body().getDayList().get(0).getDate());
                 adapter.handleClick(context, pos);
             }
 
             @Override
-            public void onFailure(Call<Data> call, Throwable t) {
+            public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
                 Toast.makeText(context, "ypor Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
@@ -94,19 +97,19 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show()
         pos = adapter.getItem(position);
         try {
-            float number = Float.valueOf(pos);
+            Float.parseFloat(pos);
             Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
             //ststus = false;
         }
         catch (Exception ex){
             // Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
             // ststus = false;
-            this.myResponse(pos, view, position);
+            this.myResponse(pos);
 
             // this.myResponse(pos);
 
             //adapter.handleClick(this, pos, status);
-                //ststus = new Boolean(false) ;
+            //ststus = new Boolean(false) ;
             }
         }
 

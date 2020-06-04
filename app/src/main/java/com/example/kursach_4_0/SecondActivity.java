@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
@@ -17,10 +16,13 @@ import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 import com.example.kursach_4_0.api.model.Day;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,10 +38,9 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
     int picselItem = 1;
     int picselSee = 0;
     private static final int picselSize = 10920;
-    private int tempCurrentItem = 0;
     int currentPosition = 0;
 
-    GridLayoutManager layoutManager;
+    // GridLayoutManager layoutManager;
 
 
     WeatherAdapter weatherAdapter;
@@ -54,7 +55,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         setContentView(R.layout.activity_second);
 
         Bundle arguments = getIntent().getExtras();
-        final String name = arguments.get("return").toString();
+        assert arguments != null;
+        final String name = Objects.requireNonNull(arguments.get("return")).toString();
         System.out.println(name);
 
         weatherAdapter = new WeatherAdapter(this,
@@ -73,7 +75,8 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
 
         MyService.createRetrofit().getData(name, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
+            public void onResponse(@NotNull Call<Data> call, @NotNull Response<Data> response) {
+                assert response.body() != null;
                 for (Day day : response.body().getDayList()) {
                     dataDayList.add(day.getDate());
                     mainDataTemperature.add(day.getMainData().getTemperature());
@@ -87,10 +90,10 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                     townAdapter.notifyDataSetChanged();
                 }
                 TextView textView = findViewById(R.id.town);
-                textView.setText(String.valueOf(name));
+                textView.setText(name);
             }
             @Override
-            public void onFailure(Call<Data> call, Throwable t) {
+            public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
             }
@@ -132,7 +135,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                picselItem = picselSize/recyclerViewSecond.getAdapter().getItemCount();
+                picselItem = picselSize/ Objects.requireNonNull(recyclerViewSecond.getAdapter()).getItemCount();
                 picselSee += dx;
                 int iterator = 0;
                 iterator = Math.round(picselSee/picselItem);
@@ -144,10 +147,9 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
                 if (iterator<listData.size() && iterator>=0){
                     Date item = listData.get(iterator);
                     String today = formatter.format(item);
-                    textView.setText(String.valueOf(today));
+                    textView.setText(today);
                     currentPosition = iterator;
                 }
-                tempCurrentItem = picselSee;
 
                 // int index = listData.indexOf(item);
 
@@ -185,11 +187,11 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
 
     @Override
     public void onTownClick(View view, int position) {
-        int tempSize;
+        // int tempSize;
         int tempPosition = 0;
 
 
-        tempSize = recyclerView.getAdapter().getItemCount();
+        // tempSize = Objects.requireNonNull(recyclerView.getAdapter()).getItemCount();
         //System.out.println(tempSize);
 
         recyclerViewSecond.scrollToPosition(tempPosition);
@@ -211,7 +213,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         int iterator = 0;
 
 
-        picselItem = picselSize/recyclerViewSecond.getAdapter().getItemCount();
+        picselItem = picselSize/ Objects.requireNonNull(recyclerViewSecond.getAdapter()).getItemCount();
         iterator = Math.round(picselSee/picselItem);
 
         //System.out.println(index);
@@ -242,8 +244,6 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
         //textView.setText(String.valueOf(item));
 
         //recyclerViewSecond.scrollToPosition(index+2);
-        tempCurrentItem = picselSee;
-
 
 
     }

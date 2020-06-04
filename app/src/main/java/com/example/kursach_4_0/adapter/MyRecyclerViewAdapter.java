@@ -13,6 +13,8 @@ import com.example.kursach_4_0.MainActivity;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
@@ -28,8 +30,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     // inflates the row layout from xml when needed
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.main_recyclerview_row, parent, false);
         return new ViewHolder(view);
     }
