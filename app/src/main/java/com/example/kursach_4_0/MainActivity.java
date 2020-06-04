@@ -3,6 +3,7 @@ package com.example.kursach_4_0;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.adapter.MyRecyclerViewAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,12 +39,12 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
         // data to populate the RecyclerView with
         ArrayList<String> towns = new ArrayList<>();
-        towns.add("London");
-        towns.add("Odessa");
+        towns.add("Лондон");
+        towns.add("Одесса");
         towns.add("123");
 
         // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvTowns);
+        RecyclerView recyclerView = findViewById(R.id.rvTown);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyRecyclerViewAdapter(this, towns);
         adapter.setClickListener(this);
@@ -69,6 +71,33 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             }
         });
          */
+    }
+
+    public void onClickButton(View view){
+        System.out.println("start");
+        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+        EditText text = textInputLayout.getEditText();
+        assert text != null;
+
+
+        try {
+            pos = String.valueOf(text.getText());
+            Float.parseFloat(pos);
+            Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            //ststus = false;
+        }
+        catch (Exception ex){
+            pos = String.valueOf(text.getText());
+            // Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            // ststus = false;
+            this.myResponse(pos);
+
+            // this.myResponse(pos);
+
+            //adapter.handleClick(this, pos, status);
+            //ststus = new Boolean(false) ;
+        }
+
     }
 
 

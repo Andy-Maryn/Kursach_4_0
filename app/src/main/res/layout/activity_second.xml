@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerTowns"
+        android:id="@+id/rvTown"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
@@ -49,8 +49,8 @@
 
     <TextView
         android:id="@+id/town"
-        android:layout_width="302dp"
-        android:layout_height="25dp"
+        android:layout_width="315dp"
+        android:layout_height="32dp"
         android:text=""
         android:textSize="23dp"
         app:layout_constraintBottom_toBottomOf="parent"

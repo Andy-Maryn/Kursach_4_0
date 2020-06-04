@@ -111,7 +111,7 @@ public class SecondActivity extends AppCompatActivity implements TownAdapter.Ite
 
         // set up the RecyclerView vertical
         // RecyclerView recyclerView = findViewById(R.id.recyclerTowns);
-        recyclerView = findViewById(R.id.recyclerTowns);
+        recyclerView = findViewById(R.id.rvTown);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         townAdapter.setClickListener(this);
 
