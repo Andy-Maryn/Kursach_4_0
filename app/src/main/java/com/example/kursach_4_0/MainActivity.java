@@ -1,7 +1,9 @@
 package com.example.kursach_4_0;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
     // MyAdapter adapter;
     String location = "Odessa";
     public String pos;
+    Context context = this;
 
     MyRecyclerViewAdapter adapter;
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         ArrayList<String> towns = new ArrayList<>();
         towns.add("London");
         towns.add("Odessa");
+        towns.add("123");
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvTowns);
@@ -66,28 +70,45 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
     }
 
 
-    public void myResponse(String location){
+    public void myResponse(String location, View view, int position){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 System.out.println(response.body().getDayList().get(0).getWeather().getId());
                 System.out.println(response.body().getDayList().get(0).getDate());
+                adapter.handleClick(context, pos);
             }
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
+                Toast.makeText(context, "ypor Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show()
         pos = adapter.getItem(position);
-        //this.myResponse(pos);
-        adapter.handleClick(this, pos);
-    }
+        try {
+            float number = Float.valueOf(pos);
+            Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            //ststus = false;
+        }
+        catch (Exception ex){
+            // Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            // ststus = false;
+            this.myResponse(pos, view, position);
+
+            // this.myResponse(pos);
+
+            //adapter.handleClick(this, pos, status);
+                //ststus = new Boolean(false) ;
+            }
+        }
+
 
 }

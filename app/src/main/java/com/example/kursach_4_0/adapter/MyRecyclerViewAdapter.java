@@ -81,9 +81,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     public void handleClick(Context context, String pos) {
+
         Intent intent = new Intent(context, SecondActivity.class);
         // System.out.println(pos);
         intent.putExtra("return", pos);
         context.startActivity(intent);
+
+
+
+
+
     }
 }

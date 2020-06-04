@@ -139,7 +139,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         }
         holder.myImageViewDescription.setImageResource(image);
 
-
         holder.myTextViewDescription.setText(description);
         holder.myTextViewTemperature.setText(temperature);
 
