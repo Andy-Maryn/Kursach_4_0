@@ -1,6 +1,7 @@
 package com.example.kursach_4_0.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,24 +165,34 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         formatter = new SimpleDateFormat("EEEE");
         today = formatter.format(date);
 
+        Drawable drawable;
+        int roundrect;
         switch (today){
             case "понедельник":
+                roundrect = R.drawable.monday;
                 break;
             case "вторник":
+                roundrect = R.drawable.tuesday;
                 break;
             case "среда":
+                roundrect = R.drawable.wednesday;
                 break;
             case "четверг":
+                roundrect = R.drawable.thursday;
                 break;
             case "пятница":
+                roundrect = R.drawable.friday;
                 break;
             case "суббота":
+                roundrect = R.drawable.saturday;
                 break;
             case "воскресенье":
+                roundrect = R.drawable.sunday;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + today);
         }
+        holder.myView.setBackgroundResource(roundrect);
 
 
 
