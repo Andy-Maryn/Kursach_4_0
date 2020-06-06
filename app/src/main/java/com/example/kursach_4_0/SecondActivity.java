@@ -2,6 +2,7 @@ package com.example.kursach_4_0;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import com.example.kursach_4_0.adapter.WeatherAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
 import com.example.kursach_4_0.api.model.Day;
+import com.example.kursach_4_0.orm.DatabaseHandler;
+import com.example.kursach_4_0.orm.MyTown;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +49,11 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
     RecyclerView recyclerView;
     RecyclerView recyclerViewSecond;
 
+    String name;
+
+    DatabaseHandler db;
+    List<MyTown> myTowns;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +61,13 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
 
         Bundle arguments = getIntent().getExtras();
         assert arguments != null;
-        final String name = Objects.requireNonNull(arguments.get("return")).toString();
+        name = Objects.requireNonNull(arguments.get("return")).toString();
         System.out.println(name);
+
+
+        db = new DatabaseHandler(this);
+
+
 
         weatherAdapter = new WeatherAdapter(this,
                 weatherDescription,
@@ -82,6 +95,21 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
                 }
                 TextView textView = findViewById(R.id.town);
                 textView.setText(name);
+
+
+                myTowns = db.getAllMyTown();
+                boolean status = true;
+                for (MyTown town: myTowns){
+                    if (name.equals(town.getName())){
+                        Button button = findViewById(R.id.favorite);
+                        button.setBackgroundResource(R.drawable.like);
+                        status = false;
+                    }
+                }
+                if (status){
+                    Button button = findViewById(R.id.favorite);
+                    button.setBackgroundResource(R.drawable.unlike);
+                }
             }
             @Override
             public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
@@ -170,6 +198,27 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
 
     @Override
     public void onWeatherClick(View view, int position) {
+
+    }
+
+    public void onClickButtonFavorite(View view) {
+        myTowns = db.getAllMyTown();
+        boolean status = true;
+        for (MyTown town: myTowns){
+            if (name.equals(town.getName())){
+                status = false;
+                db.deleteMyTown(town);
+                Button button = findViewById(R.id.favorite);
+                button.setBackgroundResource(R.drawable.unlike);
+            }
+        }
+        if (status){
+            db.addMyTown(new MyTown(name));
+            Button button = findViewById(R.id.favorite);
+            button.setBackgroundResource(R.drawable.like);
+        }
+
+
 
     }
 }

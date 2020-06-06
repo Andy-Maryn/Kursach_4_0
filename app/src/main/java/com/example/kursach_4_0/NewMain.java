@@ -1,84 +1,92 @@
 package com.example.kursach_4_0;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.kursach_4_0.adapter.MainTownAdapter;
+import com.example.kursach_4_0.adapter.PackageTabAdapter;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
+import com.example.kursach_4_0.orm.DatabaseHandler;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements MainTownAdapter.ItemClickListener {
-    // MyAdapter adapter;
-    String location = "Odessa";
-    public String pos;
-    Context context = this;
+public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemClickListener{
+    private String TAG = "PackageActivity";
+    private Context context;
+    private Toolbar toolbar;
+    public static TabLayout tabLayout;
+    public static ViewPager viewPager;
+    private PackageTabAdapter adapter;
+    String pos;
+    boolean status;
 
-    MainTownAdapter adapter;
+    DatabaseHandler db;
 
-//on create
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_package);
+        context = this;
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(getSupportActionBar() == null) {
+            setSupportActionBar(toolbar);
+        }else toolbar.setVisibility(View.GONE);
+        getSupportActionBar().setTitle("Packages");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(2);
+        tabLayout = (TabLayout) findViewById(R.id.packagetablayout);
+        status = false;
 
-        // data to populate the RecyclerView with
-        ArrayList<String> towns = new ArrayList<>();
-        towns.add("Лондон");
-        towns.add("Винница");
-        towns.add("Запорожье");
-        towns.add("Луганск");
-        towns.add("Николаев");
-        towns.add("Сумы");
-        towns.add("Херсон");
-        towns.add("Днепр");
-        towns.add("Ивано-Франковск");
-        towns.add("Луцк");
-        towns.add("Одесса");
-        towns.add("Тернополь");
-        towns.add("Хмельницкий");
-        towns.add("Донецк");
-        towns.add("Киев");
-        towns.add("Львов");
-        towns.add("Полтава");
-        towns.add("Ужгород");
-        towns.add("Черкассы");
-        towns.add("Житомир");
-        towns.add("Кривой Рог");
-        towns.add("Мариуполь");
-        towns.add("Ровно");
-        towns.add("Харьков");
-        towns.add("Чернигов");
+        //createTabFragment();
 
-        // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvTown);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MainTownAdapter(this, towns);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        System.out.println(pos);
-        location = pos;
+
+        db = new DatabaseHandler(this);
+        //db.addMyTown(new MyTown("806800000"));
+        System.out.println("!!!" + db.getAllMyTown());
+        //db.deleteAll();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        createTabFragment();
+
+    }
+
+
+
+    private void createTabFragment(){
+        adapter = new PackageTabAdapter(getSupportFragmentManager(), tabLayout);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onClickButton(View view){
         System.out.println("start");
-        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
-
+        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout3);
 
         try {
             EditText text = textInputLayout.getEditText();
@@ -90,8 +98,12 @@ public class MainActivity extends AppCompatActivity implements MainTownAdapter.I
         catch (Exception ex){
             EditText text = textInputLayout.getEditText();
             pos = String.valueOf(text.getText());
-            this.myResponse(pos);
+            MainTownAdapter.myResponse(pos, this);
+            // this.myResponse(pos);
         }
+    }
+
+    public void onClickButtonMainFavorite(View view){
 
     }
 
@@ -103,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MainTownAdapter.I
                 if (response.body() != null) {
                     System.out.println(response.body().getDayList().get(0).getWeather().getId());
                     System.out.println(response.body().getDayList().get(0).getDate());
-                    adapter.handleClick(context, pos);
+                    MainTownAdapter.handleClick(context, pos);
                 } else {
                     Toast.makeText(context, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
                 }
@@ -119,17 +131,22 @@ public class MainActivity extends AppCompatActivity implements MainTownAdapter.I
         });
     }
 
+
+
     @Override
     public void onItemClick(View view, int position) {
-        pos = adapter.getItem(position);
+        //view.getTooltipText();
+        String pos = (String) adapter.getPageTitle(0);
         try {
             Float.parseFloat(pos);
             Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
         }
         catch (Exception ex){
             this.myResponse(pos);
-            }
         }
+    }
+
+
 
 
 }
