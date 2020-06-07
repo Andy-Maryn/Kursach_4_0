@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class InternationalFragment extends Fragment {
+public class InternationalFragment extends Fragment implements MainTownAdapter.NotesAdapterListener {
     private Context context;
     private RecyclerView recyclerView;
     MainTownAdapter mainTownAdapter;
@@ -98,4 +98,24 @@ public class InternationalFragment extends Fragment {
          */
     }
 
+    private void updateData() {
+        executor.execute(() -> {
+            towns.clear();
+            List<MyTown> myTowns = db.getAllMyTown();
+            for (MyTown town: myTowns){
+                towns.add(town.getName());
+
+            }
+            mainTownAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(mainTownAdapter);
+        });
+    }
+
+    @Override
+    public void onNoteDelete(MyTown myTown) {
+        executor.execute(() -> {
+            db.deleteMyTown(myTown);
+            updateData();
+        });
+    }
 }

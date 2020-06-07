@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemClickListener{
+public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemClickListener {
     private String TAG = "PackageActivity";
     private Context context;
     private Toolbar toolbar;
@@ -60,6 +60,7 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
         db = new DatabaseHandler(this);
         //db.addMyTown(new MyTown("806800000"));
         System.out.println("!!!" + db.getAllMyTown());
+
         //db.deleteAll();
 
     }
@@ -101,10 +102,6 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
             MainTownAdapter.myResponse(pos, this);
             // this.myResponse(pos);
         }
-    }
-
-    public void onClickButtonMainFavorite(View view){
-
     }
 
 

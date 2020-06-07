@@ -217,8 +217,8 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
             Button button = findViewById(R.id.favorite);
             button.setBackgroundResource(R.drawable.like);
         }
-
-
-
     }
+
+
+
 }

@@ -16,17 +16,19 @@ import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.Data;
+import com.example.kursach_4_0.fragment.InternationalFragment;
+import com.example.kursach_4_0.orm.DatabaseHandler;
+import com.example.kursach_4_0.orm.MyTown;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@AllArgsConstructor
+// @AllArgsConstructor
 public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHolder> {
 
     private List<String> mData;
@@ -35,8 +37,9 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
     private Context context;
     private String pos;
 
+    private NotesAdapterListener mListener;
+
     private boolean status;
-    private Object listener;
 
     // data is passed into the constructor
     public MainTownAdapter(Context context, List<String> data) {
@@ -52,6 +55,10 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
         this.context = context;
         this.status = status;
 
+    }
+
+    public interface NotesAdapterListener {
+        void onNoteDelete(MyTown myTown);
     }
 
     // inflates the row layout from xml when needed
@@ -96,11 +103,40 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
         });
 
+        if (status){
+            holder.delete.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
 
-        // holder.delete.setOnClickListener(view -> {});
+                    // listener.onNoteDelete();
 
+                    DatabaseHandler db = new DatabaseHandler(context);
 
+                    for (MyTown myTown : db.getAllMyTown()) {
+                        if (town.equals(myTown.getName())) {
+
+                            if (mListener != null) mListener.onNoteDelete(myTown);
+                            //db.deleteMyTown(myTown);
+                            //this.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                //updateData(db.getAllMyTown());
+                //view.setBackgroundResource(R.drawable.like);
+
+            });
+        }
     }
+
+    public void updateData(List<String> data){
+        mData.clear();
+        mData.addAll(data);
+        notifyDataSetChanged();
+    }
+
+
+
 
     public static void myResponse(final String location, final Context context){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
@@ -143,8 +179,10 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
             super(itemView);
             myTextView = itemView.findViewById(R.id.tvTownName);
             Button button = (Button) itemView.findViewById(R.id.favoriteButton);
-            this.delete = button;
+
+
             itemView.setOnClickListener(this);
+            delete = button;
             this.itemView = itemView;
 
         }
@@ -165,6 +203,10 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
     // allows clicks events to be caught
     public void setClickListener(NewMain itemClickListener) {
         this.mClickListener = itemClickListener;
+    }
+
+    public void setListener(InternationalFragment itemListener) {
+        this.mListener = itemListener;
     }
 
     // parent activity will implement this method to respond to click events
