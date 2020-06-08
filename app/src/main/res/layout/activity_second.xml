@@ -21,6 +21,15 @@
         android:paddingTop="10dp"/>
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerWeather"
         android:layout_width="match_parent"

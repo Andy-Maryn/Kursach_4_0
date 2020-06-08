@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.kursach_4_0.adapter.MainTownAdapter;
@@ -29,7 +28,7 @@ import retrofit2.Response;
 public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemClickListener {
     private String TAG = "PackageActivity";
     private Context context;
-    private Toolbar toolbar;
+
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
     private PackageTabAdapter adapter;
@@ -44,12 +43,7 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_package);
         context = this;
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if(getSupportActionBar() == null) {
-            setSupportActionBar(toolbar);
-        }else toolbar.setVisibility(View.GONE);
-        getSupportActionBar().setTitle("Packages");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) findViewById(R.id.packagetablayout);
@@ -76,10 +70,6 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
 
 
     }
-
-
-
-
 
 
     private void createTabFragment(){

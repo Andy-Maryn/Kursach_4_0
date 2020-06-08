@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
@@ -44,6 +45,7 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
     int picselSee = 0;
     private static final int picselSize = 10920;
     int currentPosition = 0;
+    private Toolbar toolbar;
 
     WeatherAdapter weatherAdapter;
     DayWeekAdapter dayWeekAdapter;
@@ -61,6 +63,17 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(getSupportActionBar() == null) {
+            setSupportActionBar(toolbar);
+        }else toolbar.setVisibility(View.GONE);
+        getSupportActionBar().setTitle("Погода");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
 
         Bundle arguments = getIntent().getExtras();
         assert arguments != null;
@@ -188,6 +201,12 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
             }
         };
         recyclerViewSecond.addOnScrollListener(onScrollListener);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 
