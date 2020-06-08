@@ -83,25 +83,25 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
                         windDegree = "северный";
                         break;
                     case 1:
-                        windDegree = "северо-западный";
+                        windDegree = "северо-\nзападный";
                         break;
                     case 2:
                         windDegree = "западный";
                         break;
                     case 3:
-                        windDegree = "юго-западный";
+                        windDegree = "юго-\nзападный";
                         break;
                     case 4:
                         windDegree = "южный";
                         break;
                     case 5:
-                        windDegree = "юго-восточный";
+                        windDegree = "юго-\nвосточный";
                         break;
                     case 6:
                         windDegree = "восточный";
                         break;
                     case 7:
-                        windDegree = "северо-восточный";
+                        windDegree = "северо-\nвосточный";
                         break;
                     case 8:
                         windDegree = "северный";
