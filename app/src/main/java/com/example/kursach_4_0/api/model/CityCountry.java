@@ -3,6 +3,7 @@ package com.example.kursach_4_0.api.model;
 import com.google.gson.annotations.SerializedName;
 
 public class CityCountry {
+
     @SerializedName("name")
     String name;
 

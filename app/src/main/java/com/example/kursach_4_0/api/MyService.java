@@ -13,4 +13,11 @@ public class MyService {
                 .build();
         return retrofit.create(MyApi.class);
     }
+    public static MySecondApi createRetrofitCity() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.openweathermap.org/data/2.5/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(MySecondApi.class);
+    }
 }

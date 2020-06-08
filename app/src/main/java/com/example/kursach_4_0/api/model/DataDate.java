@@ -13,27 +13,4 @@ public class DataDate {
         return dayList;
     }
 
-
-    /*
-    private List<Day> dayList;
-
-    public List<Day> getDayList() {
-        return dayList;
-    }
-
-
-
-
-
-
-
-
-    private List<CityCountry> cityCountries;
-
-    public List<CityCountry> getCityCountries() {
-        return cityCountries;
-    }
-
-     */
-
 }

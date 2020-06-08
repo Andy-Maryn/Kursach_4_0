@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 import com.example.kursach_4_0.adapter.DayWeekAdapter;
 import com.example.kursach_4_0.adapter.WeatherAdapter;
 import com.example.kursach_4_0.api.MyService;
+import com.example.kursach_4_0.api.model.DataCity;
 import com.example.kursach_4_0.api.model.DataDate;
 import com.example.kursach_4_0.api.model.Day;
 import com.example.kursach_4_0.orm.DatabaseHandler;
@@ -97,9 +98,28 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
 
 
 
-                TextView textView = findViewById(R.id.town);
-                textView.setText(name);
+                //TextView textView = findViewById(R.id.town);
+                //textView.setText(name);
 
+
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<DataDate> call, @NotNull Throwable t) {
+                System.out.println("error");
+                System.out.println(t.getMessage());
+            }
+        });
+
+
+        MyService.createRetrofitCity().getData(name, MyService.KEY, "ru").enqueue(new Callback<DataCity>(){
+            @Override
+            public void onResponse(Call<DataCity> call, Response<DataCity> response) {
+
+                TextView textView = findViewById(R.id.town);
+                name = response.body().getCityCountries().getName() + ", "+ response.body().getCityCountries().getCountry();
+                textView.setText(name);
 
                 myTowns = db.getAllMyTown();
                 boolean status = true;
@@ -116,12 +136,18 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
                 }
             }
 
+
             @Override
-            public void onFailure(@NotNull Call<DataDate> call, @NotNull Throwable t) {
+            public void onFailure(Call<DataCity> call, Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
             }
         });
+
+
+
+
+
 
         recyclerView = findViewById(R.id.rvTown);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
