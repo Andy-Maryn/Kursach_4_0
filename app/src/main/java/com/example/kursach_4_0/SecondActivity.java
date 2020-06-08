@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 import com.example.kursach_4_0.adapter.DayWeekAdapter;
 import com.example.kursach_4_0.adapter.WeatherAdapter;
 import com.example.kursach_4_0.api.MyService;
-import com.example.kursach_4_0.api.model.Data;
+import com.example.kursach_4_0.api.model.DataDate;
 import com.example.kursach_4_0.api.model.Day;
 import com.example.kursach_4_0.orm.DatabaseHandler;
 import com.example.kursach_4_0.orm.MyTown;
@@ -77,10 +77,11 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
                 dataDayList);
         dayWeekAdapter = new DayWeekAdapter(this, dataDayList);
 
-        MyService.createRetrofit().getData(name, MyService.KEY, "ru").enqueue(new Callback<Data>() {
+        MyService.createRetrofit().getData(name, MyService.KEY, "ru").enqueue(new Callback<DataDate>() {
             @Override
-            public void onResponse(@NotNull Call<Data> call, @NotNull Response<Data> response) {
+            public void onResponse(@NotNull Call<DataDate> call, @NotNull Response<DataDate> response) {
                 assert response.body() != null;
+                response.body().getDayList().get(0).getDate();
                 for (Day day : response.body().getDayList()) {
                     dataDayList.add(day.getDate());
                     mainDataTemperature.add(day.getMainData().getTemperature());
@@ -93,6 +94,9 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
                     weatherAdapter.notifyDataSetChanged();
                     dayWeekAdapter.notifyDataSetChanged();
                 }
+
+
+
                 TextView textView = findViewById(R.id.town);
                 textView.setText(name);
 
@@ -111,8 +115,9 @@ public class SecondActivity extends AppCompatActivity implements DayWeekAdapter.
                     button.setBackgroundResource(R.drawable.unlike);
                 }
             }
+
             @Override
-            public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataDate> call, @NotNull Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
             }

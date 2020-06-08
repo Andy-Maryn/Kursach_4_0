@@ -1,9 +1,7 @@
 package com.example.kursach_4_0.api;
 
 
-import com.example.kursach_4_0.api.model.Data;
-
-import java.util.List;
+import com.example.kursach_4_0.api.model.DataDate;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,5 +12,5 @@ import retrofit2.http.Query;
 public interface MyApi {
 
     @GET("forecast")
-    Call<Data> getData(@Query("q") String location, @Query("APPID") String token, @Query("lang") String lang);
+    Call<DataDate> getData(@Query("q") String location, @Query("APPID") String token, @Query("lang") String lang);
 }

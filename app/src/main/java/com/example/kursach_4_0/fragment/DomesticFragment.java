@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.adapter.MainTownAdapter;
 import com.example.kursach_4_0.api.MyService;
-import com.example.kursach_4_0.api.model.Data;
+import com.example.kursach_4_0.api.model.DataDate;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -79,9 +79,9 @@ public class DomesticFragment extends Fragment implements MainTownAdapter.ItemCl
     }
 
     public void myResponse(String location){
-        MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
+        MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<DataDate>() {
             @Override
-            public void onResponse(@NotNull Call<Data> call, @NotNull Response<Data> response) {
+            public void onResponse(@NotNull Call<DataDate> call, @NotNull Response<DataDate> response) {
                 if (response.body() != null) {
                     System.out.println(response.body().getDayList().get(0).getWeather().getId());
                     System.out.println(response.body().getDayList().get(0).getDate());
@@ -92,7 +92,7 @@ public class DomesticFragment extends Fragment implements MainTownAdapter.ItemCl
             }
 
             @Override
-            public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataDate> call, @NotNull Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
                 Toast.makeText(getActivity(), "Ошибка сервера", Toast.LENGTH_SHORT).show();

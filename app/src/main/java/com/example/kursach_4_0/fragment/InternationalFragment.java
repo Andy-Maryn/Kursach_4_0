@@ -45,7 +45,7 @@ public class InternationalFragment extends Fragment implements MainTownAdapter.N
         recyclerView = view.findViewById(R.id.recyclerView);
         this.db = new DatabaseHandler(this.context);
         populateData();
-        mainTownAdapter = new MainTownAdapter(context, towns, true);
+        mainTownAdapter = new MainTownAdapter(context, towns, true, this);
         recyclerView.setAdapter(mainTownAdapter);
 
 
@@ -99,23 +99,18 @@ public class InternationalFragment extends Fragment implements MainTownAdapter.N
     }
 
     private void updateData() {
-        executor.execute(() -> {
-            towns.clear();
-            List<MyTown> myTowns = db.getAllMyTown();
-            for (MyTown town: myTowns){
-                towns.add(town.getName());
-
-            }
-            mainTownAdapter.notifyDataSetChanged();
-            recyclerView.setAdapter(mainTownAdapter);
-        });
+        towns.clear();
+        List<MyTown> myTowns = db.getAllMyTown();
+        for (MyTown town: myTowns){
+            towns.add(town.getName());
+        }
+        recyclerView.setAdapter(mainTownAdapter);
+        mainTownAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onNoteDelete(MyTown myTown) {
-        executor.execute(() -> {
-            db.deleteMyTown(myTown);
-            updateData();
-        });
+        db.deleteMyTown(myTown);
+        updateData();
     }
 }

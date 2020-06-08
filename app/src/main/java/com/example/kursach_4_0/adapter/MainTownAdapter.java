@@ -15,7 +15,7 @@ import com.example.kursach_4_0.NewMain;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 import com.example.kursach_4_0.api.MyService;
-import com.example.kursach_4_0.api.model.Data;
+import com.example.kursach_4_0.api.model.DataDate;
 import com.example.kursach_4_0.fragment.InternationalFragment;
 import com.example.kursach_4_0.orm.DatabaseHandler;
 import com.example.kursach_4_0.orm.MyTown;
@@ -39,6 +39,9 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
     private NotesAdapterListener mListener;
 
+
+    private InternationalFragment internationalFragment;
+
     private boolean status;
 
     // data is passed into the constructor
@@ -57,9 +60,19 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
     }
 
+    public MainTownAdapter(Context context, List<String> data, boolean status, InternationalFragment internationalFragment) {
+        this.mInflater = LayoutInflater.from(context);
+        this.mData = data;
+        this.context = context;
+        this.status = status;
+        this.internationalFragment = internationalFragment;
+
+    }
+
     public interface NotesAdapterListener {
         void onNoteDelete(MyTown myTown);
     }
+
 
     // inflates the row layout from xml when needed
     @NotNull
@@ -114,10 +127,9 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
                     for (MyTown myTown : db.getAllMyTown()) {
                         if (town.equals(myTown.getName())) {
-
+                            mListener = internationalFragment;
+                            mListener.onNoteDelete(myTown);
                             if (mListener != null) mListener.onNoteDelete(myTown);
-                            //db.deleteMyTown(myTown);
-                            //this.notifyDataSetChanged();
                         }
                     }
                 }
@@ -139,12 +151,13 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
 
     public static void myResponse(final String location, final Context context){
-        MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<Data>() {
+        MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<DataDate>() {
             @Override
-            public void onResponse(@NotNull Call<Data> call, @NotNull Response<Data> response) {
+            public void onResponse(@NotNull Call<DataDate> call, @NotNull Response<DataDate> response) {
                 if (response.body() != null) {
-                    System.out.println(response.body().getDayList().get(0).getWeather().getId());
-                    System.out.println(response.body().getDayList().get(0).getDate());
+                    //System.out.println(response.body().getDayList().get(0).getWeather().getId());
+                    //System.out.println(response.body().getDayList().get(0).getDate());
+                    //System.out.println(response.body().getCityCountries().get(0).getName());
                     MainTownAdapter.handleClick(context, location);
                 } else {
                     Toast.makeText(context, "Город " + location + " не найден", Toast.LENGTH_SHORT).show();
@@ -152,7 +165,7 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
             }
 
             @Override
-            public void onFailure(@NotNull Call<Data> call, @NotNull Throwable t) {
+            public void onFailure(@NotNull Call<DataDate> call, @NotNull Throwable t) {
                 System.out.println("error");
                 System.out.println(t.getMessage());
                 Toast.makeText(context, "Ошибка сервера", Toast.LENGTH_SHORT).show();
