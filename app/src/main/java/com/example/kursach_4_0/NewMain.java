@@ -77,16 +77,17 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        System.out.println(keyCode);
+
+        if (keyCode == 4)
+            finish();
+
         if (keyCode == 66)
-        clickButton();
+            clickButton();
+
         return false;
     }
 
