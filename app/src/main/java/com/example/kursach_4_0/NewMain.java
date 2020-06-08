@@ -3,6 +3,7 @@ package com.example.kursach_4_0;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -78,6 +79,9 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
 
 
 
+
+
+
     private void createTabFragment(){
         adapter = new PackageTabAdapter(getSupportFragmentManager(), tabLayout);
         viewPager.setAdapter(adapter);
@@ -89,15 +93,28 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
         return true;
     }
 
-    public void onClickButton(View view){
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == 66)
+        clickButton();
+        return false;
+    }
+
+    public void clickButton (){
         System.out.println("start");
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout3);
 
         try {
             EditText text = textInputLayout.getEditText();
             pos = String.valueOf(text.getText());
-            Float.parseFloat(pos);
-            Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            if (pos.length() == 0){
+                Toast.makeText(this, "Вы не ввели название города", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Float.parseFloat(pos);
+                Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            }
+
             //ststus = false;
         }
         catch (Exception ex){
@@ -106,6 +123,10 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
             MainTownAdapter.myResponse(pos, this);
             // this.myResponse(pos);
         }
+    }
+
+    public void onClickButton(View view){
+        clickButton();
     }
 
 
@@ -139,8 +160,13 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
         //view.getTooltipText();
         String pos = (String) adapter.getPageTitle(0);
         try {
-            Float.parseFloat(pos);
-            Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            if (pos.length() == 0){
+                Toast.makeText(this, "Вы не ввели название города", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Float.parseFloat(pos);
+                Toast.makeText(this, "Город " + pos + " не найден", Toast.LENGTH_SHORT).show();
+            }
         }
         catch (Exception ex){
             this.myResponse(pos);
