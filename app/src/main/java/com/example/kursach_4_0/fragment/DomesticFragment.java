@@ -51,7 +51,6 @@ public class DomesticFragment extends Fragment implements MainTownAdapter.ItemCl
     }
 
     private void populateData() {
-        towns.add("Лондон");
         towns.add("Винница");
         towns.add("Запорожье");
         towns.add("Луганск");

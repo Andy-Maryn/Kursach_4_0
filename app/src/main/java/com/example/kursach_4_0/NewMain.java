@@ -69,6 +69,10 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
     protected void onStart() {
         super.onStart();
         createTabFragment();
+        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout3);
+        textInputLayout.getEditText().setText("");
+
+
 
     }
 
