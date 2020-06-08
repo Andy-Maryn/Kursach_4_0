@@ -15,7 +15,6 @@
         android:color="#FF000000" />
 
 
-
     <padding
         android:bottom="20dp"
         android:left="15dp"
