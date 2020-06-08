@@ -13,7 +13,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_weight="1"
-        android:background="@drawable/recycle_buttons"
+        android:background="@android:drawable/dialog_holo_light_frame"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
