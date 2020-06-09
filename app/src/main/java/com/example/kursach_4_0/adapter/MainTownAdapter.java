@@ -11,12 +11,11 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kursach_4_0.NewMain;
 import com.example.kursach_4_0.R;
 import com.example.kursach_4_0.SecondActivity;
 import com.example.kursach_4_0.api.MyService;
 import com.example.kursach_4_0.api.model.DataDate;
-import com.example.kursach_4_0.fragment.InternationalFragment;
+import com.example.kursach_4_0.fragment.SecondFragment;
 import com.example.kursach_4_0.orm.DatabaseHandler;
 import com.example.kursach_4_0.orm.MyTown;
 
@@ -40,7 +39,7 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
     private NotesAdapterListener mListener;
 
 
-    private InternationalFragment internationalFragment;
+    private SecondFragment secondFragment;
 
     private boolean status;
 
@@ -60,12 +59,12 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
     }
 
-    public MainTownAdapter(Context context, List<String> data, boolean status, InternationalFragment internationalFragment) {
+    public MainTownAdapter(Context context, List<String> data, boolean status, SecondFragment secondFragment) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.context = context;
         this.status = status;
-        this.internationalFragment = internationalFragment;
+        this.secondFragment = secondFragment;
 
     }
 
@@ -127,7 +126,7 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
                     for (MyTown myTown : db.getAllMyTown()) {
                         if (town.equals(myTown.getName())) {
-                            mListener = internationalFragment;
+                            mListener = secondFragment;
                             mListener.onNoteDelete(myTown);
                             if (mListener != null) mListener.onNoteDelete(myTown);
                         }
@@ -166,8 +165,8 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
 
             @Override
             public void onFailure(@NotNull Call<DataDate> call, @NotNull Throwable t) {
-                System.out.println("error");
-                System.out.println(t.getMessage());
+                //System.out.println("error");
+                //System.out.println(t.getMessage());
                 Toast.makeText(context, "Ошибка сервера", Toast.LENGTH_SHORT).show();
             }
 
@@ -214,11 +213,14 @@ public class MainTownAdapter extends RecyclerView.Adapter<MainTownAdapter.ViewHo
     }
 
     // allows clicks events to be caught
+    /*
     public void setClickListener(NewMain itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    public void setListener(InternationalFragment itemListener) {
+     */
+
+    public void setListener(SecondFragment itemListener) {
         this.mListener = itemListener;
     }
 

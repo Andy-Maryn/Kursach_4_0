@@ -16,10 +16,8 @@ import com.example.kursach_4_0.orm.MyTown;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
-public class InternationalFragment extends Fragment implements MainTownAdapter.NotesAdapterListener {
+public class SecondFragment extends Fragment implements MainTownAdapter.NotesAdapterListener {
     private Context context;
     private RecyclerView recyclerView;
     MainTownAdapter mainTownAdapter;
@@ -29,7 +27,7 @@ public class InternationalFragment extends Fragment implements MainTownAdapter.N
     DatabaseHandler db;
 
 
-    private Executor executor = Executors.newSingleThreadExecutor();
+    // private Executor executor = Executors.newSingleThreadExecutor();
 
 
     @Override

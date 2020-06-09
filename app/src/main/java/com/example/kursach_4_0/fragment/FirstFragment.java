@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DomesticFragment extends Fragment implements MainTownAdapter.ItemClickListener{
+public class FirstFragment extends Fragment implements MainTownAdapter.ItemClickListener{
     private Context context;
     private RecyclerView recyclerView;
     private MainTownAdapter mainTownAdapter;

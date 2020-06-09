@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.kursach_4_0.fragment.DomesticFragment;
-import com.example.kursach_4_0.fragment.InternationalFragment;
+import com.example.kursach_4_0.fragment.FirstFragment;
+import com.example.kursach_4_0.fragment.SecondFragment;
 import com.google.android.material.tabs.TabLayout;
 public class PackageTabAdapter extends FragmentStatePagerAdapter {
     TabLayout tabLayout;
@@ -18,11 +18,11 @@ public class PackageTabAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         if (position == 0)
         {
-            fragment = new DomesticFragment();
+            fragment = new FirstFragment();
         }
         else if (position == 1)
         {
-            fragment = new InternationalFragment();
+            fragment = new SecondFragment();
         }
         return fragment;
     }

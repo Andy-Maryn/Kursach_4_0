@@ -13,19 +13,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.kursach_4_0.adapter.MainTownAdapter;
 import com.example.kursach_4_0.adapter.PackageTabAdapter;
-import com.example.kursach_4_0.api.MyService;
-import com.example.kursach_4_0.api.model.DataDate;
 import com.example.kursach_4_0.orm.DatabaseHandler;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.jetbrains.annotations.NotNull;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemClickListener {
+public class NewMain extends AppCompatActivity{
     private String TAG = "PackageActivity";
     private Context context;
 
@@ -54,7 +46,7 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
 
         db = new DatabaseHandler(this);
         //db.addMyTown(new MyTown("806800000"));
-        System.out.println("!!!" + db.getAllMyTown());
+        // System.out.println("!!!" + db.getAllMyTown());
 
         //db.deleteAll();
 
@@ -92,7 +84,7 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
     }
 
     public void clickButton (){
-        System.out.println("start");
+        // System.out.println("start");
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout3);
 
         try {
@@ -121,6 +113,8 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
     }
 
 
+    /*
+
     public void myResponse(String location){
         MyService.createRetrofit().getData(location, MyService.KEY, "ru").enqueue(new Callback<DataDate>() {
             @Override
@@ -144,8 +138,10 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
         });
     }
 
+     */
 
 
+/*
     @Override
     public void onItemClick(View view, int position) {
         //view.getTooltipText();
@@ -163,7 +159,7 @@ public class NewMain extends AppCompatActivity implements MainTownAdapter.ItemCl
             this.myResponse(pos);
         }
     }
-
+*/
 
 
 
